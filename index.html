@@ -107,6 +107,8 @@ select.ctrl{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right
 .ctrl::placeholder{color:var(--text-3);}
 .ctrl:hover:not(:disabled):not(:focus){border-color:#aab4c8;}
 .ctrl:focus{outline:none;border-color:var(--navy);box-shadow:0 0 0 4px rgba(26,46,90,.13);}
+.ctrl:disabled{background:var(--surface-3);color:var(--text-3);cursor:not-allowed;opacity:.7;}
+.input-wrap:has(.ctrl:disabled) .lead{opacity:.5;}
 
 .input-wrap{position:relative;display:flex;align-items:center;}
 .input-wrap .lead{position:absolute;left:13px;color:var(--text-3);pointer-events:none;display:grid;place-items:center;}
@@ -126,6 +128,28 @@ select.ctrl{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right
 .hint.err{color:var(--red);}
 .hint.ok{color:var(--green);}
 .hint.muted{color:var(--text-3);}
+.ini-warn{font-size:12.5px;color:var(--red);margin-top:6px;display:flex;align-items:flex-start;gap:6px;line-height:1.4;}
+.ini-warn svg{flex-shrink:0;margin-top:1px;}
+.block-title{font-size:13.5px;font-weight:800;color:var(--navy);text-transform:uppercase;letter-spacing:.03em;}
+.modal-overlay{position:fixed;inset:0;z-index:50;background:rgba(15,27,58,.55);backdrop-filter:blur(2px);display:grid;place-items:center;padding:20px;animation:fadeUp .2s ease;}
+.modal-card{background:var(--surface);border-radius:var(--r-xl);box-shadow:var(--shadow-lg);padding:30px 28px;max-width:420px;width:100%;text-align:center;animation:pop .35s cubic-bezier(.2,1.3,.4,1);}
+.modal-card .modal-ic{width:64px;height:64px;border-radius:99px;margin:0 auto 18px;background:var(--amber-soft);color:var(--amber);display:grid;place-items:center;}
+.modal-card h3{font-size:20px;font-weight:800;letter-spacing:-.01em;margin:0 0 10px;}
+.modal-card p{margin:0 0 22px;color:var(--text-2);font-size:14.5px;line-height:1.5;}
+.modal-card .btn{width:100%;height:48px;}
+.modal-card.wide{max-width:540px;text-align:left;}
+.modal-card.wide h3{font-size:19px;}
+.modal-sub{margin:0 0 16px;color:var(--text-2);font-size:14px;line-height:1.5;}
+.confirm-table-wrap{max-height:48vh;overflow:auto;border:1px solid var(--border);border-radius:var(--r-md);}
+.confirm-table{width:100%;border-collapse:collapse;font-size:13.5px;}
+.confirm-table th,.confirm-table td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:top;}
+.confirm-table th{width:38%;color:var(--text-2);font-weight:600;background:var(--surface-2);white-space:nowrap;}
+.confirm-table td{color:var(--text);font-weight:600;}
+.confirm-table tr:last-child th,.confirm-table tr:last-child td{border-bottom:none;}
+.modal-actions{display:flex;gap:10px;margin-top:20px;}
+.modal-actions .btn{flex:1;width:auto;height:48px;font-size:15px;}
+.btn-ghost{background:var(--surface);border:1.5px solid var(--border-strong);color:var(--text);}
+.btn-ghost:hover{background:var(--surface-2);}
 
 /* readonly / RENAPO */
 .ro{
@@ -427,28 +451,107 @@ select.ctrl{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right
         <div class="sec-status" data-status=""></div>
       </div>
       <div class="sec-body">
-        <div class="grid c2">
-          <div class="field" data-field="tutor">
-            <label for="tutor">Nombre del tutor <span class="req">*</span></label>
-            <div class="input-wrap"><input class="ctrl" id="tutor" name="tutor" placeholder="Nombre completo"><span class="trail" data-trail=""></span></div>
+        <!-- Responsable 1 -->
+        <div class="block-title">Responsable 1 <span class="optional" style="font-weight:600;text-transform:none;letter-spacing:0">padre, madre o tutor</span></div>
+        <div class="grid c2" style="margin-top:12px">
+          <div class="field" data-field="resp1Nombre">
+            <label for="resp1Nombre">Nombre completo <span class="req">*</span></label>
+            <div class="input-wrap"><input class="ctrl" id="resp1Nombre" placeholder="Nombre completo"><span class="trail" data-trail=""></span></div>
           </div>
-          <div class="field" data-field="telTutor">
-            <label for="telTutor">Teléfono del tutor <span class="req">*</span></label>
+          <div class="field" data-field="resp1Parentesco">
+            <label for="resp1Parentesco">Parentesco <span class="req">*</span></label>
+            <div class="select-wrap">
+              <select class="ctrl parentesco" id="resp1Parentesco"></select>
+              <span class="caret"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg></span>
+            </div>
+          </div>
+          <div class="field" data-field="resp1Tel">
+            <label for="resp1Tel">Teléfono <span class="req">*</span></label>
             <div class="input-wrap has-lead">
               <span class="lead"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h3l2 5-2.5 1.5a11 11 0 0 0 5 5L19 12l2 5v3a1 1 0 0 1-1.1 1A16 16 0 0 1 4 5.1 1 1 0 0 1 5 4Z"></path></svg></span>
-              <input class="ctrl" id="telTutor" name="telTutor" inputmode="numeric" maxlength="14" placeholder="55 0000 0000">
+              <input class="ctrl" id="resp1Tel" inputmode="numeric" maxlength="14" placeholder="55 0000 0000">
+              <span class="trail" data-trail=""></span>
+            </div>
+          </div>
+          <div class="field" data-field="resp1Correo">
+            <label for="resp1Correo">Correo <span class="optional">opcional</span></label>
+            <div class="input-wrap has-lead">
+              <span class="lead"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v14H4zM4 6.5 12 13l8-6.5"></path></svg></span>
+              <input class="ctrl" id="resp1Correo" type="email" placeholder="correo@correo.com">
+              <span class="trail" data-trail=""></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Responsable 2 (opcional) -->
+        <div class="block-title">Responsable 2 <span class="optional" style="font-weight:600;text-transform:none;letter-spacing:0">opcional</span></div>
+        <div class="grid c2" style="margin-top:12px">
+          <div class="field" data-field="resp2Nombre">
+            <label for="resp2Nombre">Nombre completo</label>
+            <div class="input-wrap"><input class="ctrl" id="resp2Nombre" placeholder="Nombre completo"><span class="trail" data-trail=""></span></div>
+          </div>
+          <div class="field" data-field="resp2Parentesco">
+            <label for="resp2Parentesco">Parentesco</label>
+            <div class="select-wrap">
+              <select class="ctrl parentesco" id="resp2Parentesco"></select>
+              <span class="caret"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg></span>
+            </div>
+          </div>
+          <div class="field" data-field="resp2Tel">
+            <label for="resp2Tel">Teléfono</label>
+            <div class="input-wrap has-lead">
+              <span class="lead"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h3l2 5-2.5 1.5a11 11 0 0 0 5 5L19 12l2 5v3a1 1 0 0 1-1.1 1A16 16 0 0 1 4 5.1 1 1 0 0 1 5 4Z"></path></svg></span>
+              <input class="ctrl" id="resp2Tel" inputmode="numeric" maxlength="14" placeholder="55 0000 0000">
               <span class="trail" data-trail=""></span>
             </div>
           </div>
           <div class="field">
-            <label for="emergencia">Contacto de emergencia <span class="optional">opcional</span></label>
-            <input class="ctrl" id="emergencia" name="emergencia" placeholder="Nombre completo">
+            <label for="resp2Correo">Correo</label>
+            <div class="input-wrap has-lead">
+              <span class="lead"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v14H4zM4 6.5 12 13l8-6.5"></path></svg></span>
+              <input class="ctrl" id="resp2Correo" type="email" placeholder="correo@correo.com">
+            </div>
           </div>
-          <div class="field" data-field="telEmergencia">
-            <label for="telEmergencia">Teléfono de emergencia <span class="optional">opcional</span></label>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Salud -->
+        <label class="toggle-row" for="enfermedadToggle" style="padding:0">
+          <span class="switch" id="enfermedadSwitch"></span>
+          <span class="tt"><b>¿Alguna enfermedad o condición médica?</b><span>Actívalo si el alumno tiene alguna condición que debamos conocer</span></span>
+          <input type="checkbox" id="enfermedadToggle" class="hidden">
+        </label>
+        <div id="enfermedadBody" class="hidden" style="margin-top:14px">
+          <div class="field" data-field="enfermedadDesc">
+            <label for="enfermedadDesc">Descripción <span class="req">*</span></label>
+            <div class="input-wrap"><input class="ctrl" id="enfermedadDesc" placeholder="Describe la enfermedad, alergia o condición"><span class="trail" data-trail=""></span></div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Contacto de emergencia -->
+        <div class="block-title">Contacto de emergencia <span class="optional" style="font-weight:600;text-transform:none;letter-spacing:0">opcional</span></div>
+        <div class="grid c3" style="margin-top:12px">
+          <div class="field" data-field="emergNombre">
+            <label for="emergNombre">Nombre</label>
+            <div class="input-wrap"><input class="ctrl" id="emergNombre" placeholder="Nombre completo"><span class="trail" data-trail=""></span></div>
+          </div>
+          <div class="field" data-field="emergParentesco">
+            <label for="emergParentesco">Parentesco</label>
+            <div class="select-wrap">
+              <select class="ctrl parentesco" id="emergParentesco"></select>
+              <span class="caret"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg></span>
+            </div>
+          </div>
+          <div class="field" data-field="emergTel">
+            <label for="emergTel">Teléfono</label>
             <div class="input-wrap has-lead">
               <span class="lead"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h3l2 5-2.5 1.5a11 11 0 0 0 5 5L19 12l2 5v3a1 1 0 0 1-1.1 1A16 16 0 0 1 4 5.1 1 1 0 0 1 5 4Z"></path></svg></span>
-              <input class="ctrl" id="telEmergencia" name="telEmergencia" inputmode="numeric" maxlength="14" placeholder="55 0000 0000">
+              <input class="ctrl" id="emergTel" inputmode="numeric" maxlength="14" placeholder="55 0000 0000">
               <span class="trail" data-trail=""></span>
             </div>
           </div>
@@ -467,7 +570,9 @@ select.ctrl{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right
         <div class="grid c2">
           <div class="field" data-field="escuela">
             <label for="escuela">Escuela de procedencia <span class="req">*</span></label>
-            <div class="input-wrap"><input class="ctrl" id="escuela" name="escuela" placeholder="Nombre de tu escuela"><span class="trail" data-trail=""></span></div>
+            <div class="input-wrap"><input class="ctrl" id="escuela" name="escuela" list="escuelasList" placeholder="Escribe el número o el nombre…" autocomplete="off"><span class="trail" data-trail=""></span></div>
+            <datalist id="escuelasList"></datalist>
+            <div class="hint muted">Escribe el número (ej. 3) o el nombre y elige de la lista. Si no aparece, escríbela completa.</div>
           </div>
           <div class="field" data-field="nivel">
             <label for="nivel">Nivel de estudios <span class="req">*</span></label>
@@ -595,9 +700,45 @@ select.ctrl{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right
     <div class="reminder">
       <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0-9v5m0-9v.5"></path></svg></span>
       <div>
-        <div class="t">Presenta tus documentos en plantel</div>
-        <div class="d">Deberás acudir a firmar los documentos de inscripción. Si el alumno es menor de edad, deberá presentarse acompañado de su tutor o padre de familia.</div>
+        <div class="t">Para finalizar tu inscripción</div>
+        <div class="d" id="confirmNoteDesc"></div>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MODAL: restricción de edad ===== -->
+<div id="ageModal" class="modal-overlay hidden">
+  <div class="modal-card" role="alertdialog" aria-modal="true" aria-labelledby="ageModalTitle">
+    <div class="modal-ic"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 1.5 21h21L12 3Zm0 6v6m0 3v.5"></path></svg></div>
+    <h3 id="ageModalTitle">Este curso no es para tu edad</h3>
+    <p id="ageModalMsg"></p>
+    <button type="button" class="btn btn-primary" id="ageModalClose">Entendido</button>
+  </div>
+</div>
+
+<!-- ===== MODAL: confirmar datos antes de enviar ===== -->
+<div id="confirmDataModal" class="modal-overlay hidden">
+  <div class="modal-card wide" role="dialog" aria-modal="true" aria-labelledby="confirmDataTitle">
+    <h3 id="confirmDataTitle">Confirma los datos del alumno</h3>
+    <p class="modal-sub">Revisa que todo esté correcto. Si algo está mal, vuelve a corregirlo antes de enviar.</p>
+    <div class="confirm-table-wrap"><table class="confirm-table"><tbody id="confirmTableBody"></tbody></table></div>
+    <div class="modal-actions">
+      <button type="button" class="btn btn-ghost" id="confirmEditBtn">Volver a revisar</button>
+      <button type="button" class="btn btn-primary" id="confirmSendBtn">Confirmar y enviar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MODAL: dependiente / independiente (alumno mayor de 18) ===== -->
+<div id="depModal" class="modal-overlay hidden">
+  <div class="modal-card" role="alertdialog" aria-modal="true" aria-labelledby="depModalTitle">
+    <div class="modal-ic" style="background:var(--navy-soft);color:var(--navy)"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm-7 8a7 7 0 0 1 14 0"></path></svg></div>
+    <h3 id="depModalTitle">El alumno es mayor de edad</h3>
+    <p>¿El alumno es <b>dependiente</b> (a cargo de un padre o tutor) o <b>independiente</b> (responsable de sí mismo)?</p>
+    <div class="modal-actions">
+      <button type="button" class="btn btn-ghost" data-dep="Dependiente">Dependiente</button>
+      <button type="button" class="btn btn-primary" data-dep="Independiente">Independiente</button>
     </div>
   </div>
 </div>
@@ -626,29 +767,35 @@ select.ctrl{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right
     { id: "colbach", name: "COLBACH 130 hrs", tipo: "Grupo",
       desc: "Prepa en un solo examen: preparación para el examen único de bachillerato (Septiembre 2026).",
       para: "Aspirantes a bachillerato", plantel: "Solo Hidalgo",
+      minEdad: 18, maxEdad: null,
       horarios: ["Inicio 15 jun · L–V 08:00–11:00", "Inicio 6 jul · L–V 08:00–11:00", "Inicio 20 jul · L–V 08:00–11:00"] },
 
     // --- Diplomados (sabatinos) ---
     { id: "dip-kids", name: "Diplomado Kids", tipo: "Grupo",
       desc: "Reforzamiento sabatino de matemáticas.",
       para: "4°, 5° y 6° de primaria", plantel: "San Cosme", periodo: "Inicia 12 sep",
+      minEdad: 9, maxEdad: 12,
       horarios: ["Sábados 09:00–14:00"] },
     { id: "dip-junior", name: "Diplomado Junior", tipo: "Grupo",
       desc: "Reforzamiento sabatino de matemáticas.",
       para: "1°, 2° y 3° de secundaria", plantel: "San Cosme", periodo: "Inicia 12 sep",
+      minEdad: 12, maxEdad: 15,
       horarios: ["Sábados 09:00–14:00"] },
     { id: "dip-master", name: "Diplomado Master", tipo: "Grupo",
       desc: "Nivel avanzado de matemáticas.",
       para: "Nivel medio superior", plantel: "San Cosme", periodo: "Inicia 18 jul",
       materias: "Aritmética, álgebra, geometría, trigonometría, cálculo diferencial e integral",
+      minEdad: 15, maxEdad: null,
       horarios: ["Sábados 09:00–14:00"] },
     { id: "dip-ingles", name: "Diplomado Inglés", tipo: "Grupo",
       desc: "Diplomado de inglés sabatino.",
-      plantel: "San Cosme", periodo: "Inicia 5 sep",
+      para: "Jóvenes de 14 a 18 años", plantel: "San Cosme", periodo: "Inicia 5 sep",
+      minEdad: 14, maxEdad: 18,
       horarios: ["Sábados 09:00–14:00"] },
     { id: "dip-regularizacion", name: "Diplomado en Regularización", tipo: "Particular",
       desc: "Clases semi-individuales, a tu ritmo.",
       para: "Todos los niveles", periodo: "La fecha de término depende del avance del alumno",
+      minEdad: null, maxEdad: null,
       horarios: [] },
 
     // --- Cursos de Verano (lunes a viernes) ---
@@ -656,16 +803,19 @@ select.ctrl{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right
       desc: "Curso de verano lúdico y formativo.",
       para: "Primaria · 8 a 11 años", plantel: "San Cosme", periodo: "20 jul – 21 ago",
       materias: "Matemáticas, Scratch, Ciencias, Inglés, Expresión",
+      minEdad: 8, maxEdad: 11,
       horarios: ["L–V 09:00–14:00"] },
     { id: "aprendizaje-movimiento", name: "Aprendizaje en Movimiento", tipo: "Grupo",
       desc: "Curso de verano de reforzamiento.",
       para: "Pasan a 2° y 3° de secundaria", plantel: "Hidalgo", periodo: "27 jul – 21 ago",
       materias: "Matemáticas, Física, Química, Comprensión Lectora",
+      minEdad: 12, maxEdad: 14,
       horarios: ["L–V 09:00–13:00"] },
     { id: "prepa-ready", name: "Prepa Ready", tipo: "Grupo",
       desc: "Curso de verano de transición a la prepa.",
       para: "Terminaron la secundaria", plantel: "San Cosme", periodo: "20 jul – 21 ago",
       materias: "IA, Roblox, Word, PowerPoint, Lógica, Inglés, Expresión",
+      minEdad: 15, maxEdad: null,
       horarios: ["L–V 09:00–14:00"] },
   ];
 
@@ -692,14 +842,161 @@ select.ctrl{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right
     "626 — Régimen Simplificado de Confianza (RESICO)",
   ];
 
+  // Escuelas de la zona (escuela de procedencia)
+  const ESCUELAS = [
+    "Sec. 1 — César A. Ruíz",
+    "Sec. 2 — Ana María Berlanga",
+    "Sec. 3 — Héroes de Chapultepec",
+    "Sec. 4 — Moisés Sáenz",
+    "Sec. 6 — Carlota Jaso",
+    "Sec. 7 — José Manuel Ramos",
+    "Sec. 11 — Adriana García Corral",
+    "Sec. 14 — Jorge Quijano",
+    "Sec. 15 — Albert Einstein",
+    "Sec. 16 — Pedro Díaz",
+    "Sec. 20 — José Arteaga",
+    "Sec. 23 — Mtro. Juan G. Holguín",
+    "Sec. 26 — Francisco I. Madero",
+    "Sec. 28 — Dr. Manuel Barranco",
+    "Sec. 46 — José Vasconcelos",
+    "Sec. 66 — Ida Appendini Dagasso",
+    "Sec. 83 — Presidente Valentín Gómez Farías",
+    "Sec. 92 — República de Costa Rica",
+    "Sec. 100 — Luis de Camoens",
+    "Sec. 103 — República Mexicana",
+    "Sec. 106 — Antonio Ballesteros Usano",
+    "Sec. 109 — León Felipe",
+    "Sec. 120 — Rosario Castellanos",
+    "Sec. 121 — Rabindranath Tagore",
+    "Sec. 124 — México",
+    "Sec. 168 — Maximiliano Ruiz Castañeda",
+    "Sec. 200 — Gral. Augusto C. Sandino",
+    "Sec. 245 — Ángel Trías Álvarez",
+    "Sec. 254 — Nagoya",
+    "Sec. 260 — Izcalotzin",
+    "Sec. 263 — Deporte para Todos",
+    "Sec. Anexa — San Cosme No. 83",
+    "Tec. 2 — Corregidora de Querétaro",
+    "Tec. 3 — Venustiano Carranza",
+    "Tec. 5 — Rafael Dondé",
+    "Tec. 6 — Sor Juana Inés de la Cruz",
+    "Tec. 10 — Artes Gráficas",
+    "Tec. 12 — Guardias Presidenciales",
+    "Tec. 23 — Dr. Mariano Vázquez Rodríguez",
+    "Tec. 26 — Carlos Pellicer",
+    "Tec. 42 — Ing. Alejo Díaz Ceballos",
+    "Tec. 63 — Melchor Ocampo",
+    "Centro Cultural de la Ciudad de México",
+    "Colegio Hispano Americano",
+    "Instituto Isabel Grasseteau",
+    "Colegio de San Ignacio de Loyola (Vizcaínas)",
+    "Colegio Holandés",
+    "Instituto María Canales",
+    "Zeferino Aguirre",
+    "Colegio Saint Mary",
+    "Anglo Español",
+    "Colegio Willmington",
+    "Colegio Inglés Elizabeth Brock",
+    "Justo Sierra",
+    "Colegio Colbert",
+    "Escuela Inglesa Kent",
+    "General Arnulfo R. Gómez",
+    "Manuel Acosta",
+    "Reina María",
+    "Salesiano Santa Julia",
+    "Sara Alarcón",
+    "César Bilingüe School",
+    // --- Primarias ---
+    "Prim. — Fray Francisco Aparicio",
+    "Prim. — Estado de Hidalgo",
+    "Prim. — Árbol de la Noche Triste",
+    "Prim. — Francisco Sarabia",
+    "Prim. — Leopoldo E. Camarena",
+    "Prim. — Orozco y Berra",
+    "Prim. — Adolfo Cienfuegos y Camus",
+    "Prim. — Francisco Eduardo Tres Guerras",
+    "Prim. — Prof. Adelaido Ríos y Montes de Oca",
+    "Prim. — David G. Berlanga",
+    "Prim. — Anexa a la BENM «Luis Hidalgo Monroy»",
+    "Prim. — Rafael Ángel de la Peña",
+    "Prim. — Anexa a la BENM «República del Brasil»",
+    "Prim. — El Pensador Mexicano",
+    "Prim. — República de Cuba",
+    "Prim. — Andrés Bello",
+    "Prim. — Ezequiel A. Chávez",
+    "Prim. — Florencio M. del Castillo",
+    "Prim. — Margarita Maza de Juárez",
+    "Prim. — Padre Mier",
+    "Prim. — Dr. Belisario Domínguez",
+    "Prim. — Estado de Veracruz",
+    "Prim. — Fray Luis de León",
+    "Prim. — Ignacio M. Altamirano",
+    "Prim. — República de Honduras",
+    "Prim. — Fray Bartolomé",
+    "Prim. — Juan Téllez Vargas",
+    "Prim. — Gustavo Pedro Mahr",
+    "Prim. — Horacio Mann",
+    "Prim. — Víctor María Flores",
+    "Prim. — Miguel de Unamuno",
+    "Prim. — Las Tres Américas",
+    "Prim. — República de Bolivia",
+    "Prim. — Revolución",
+    "Prim. — Pensiones",
+    "Prim. — Profra. Vicenta Trujillo",
+    "Prim. — Francisco Medina Ascencio",
+    "Prim. — Nicolás Rangel",
+    "Prim. — I.S.S.S.T.E.",
+    "Prim. — José Antonio Torres",
+    "Prim. — Fray Melchor de Talamantes",
+    "Prim. — Montessori's World Elementary School",
+    "Prim. — Colegio Nueva Infancia",
+    "Prim. — Inglés Kent",
+    "Prim. — Instituto Boston",
+    "Prim. — Manuel Acosta",
+    "Prim. — Reina María",
+    "Prim. — María Estuardo",
+    "Prim. — Centro de Investigaciones Educativas y Artísticas Pipiolo",
+    "Prim. — Colegio Inglés Elizabeth Brock",
+    "Prim. — Colegio Willmington",
+    "Prim. — Instituto Anglo Español",
+    "Prim. — Instituto Bilingüe Victoria Gama",
+    "Prim. — Manuel María Contreras",
+    "Prim. — Saint Mary School",
+    "Prim. — Escuela de la Ciudad de México",
+    "Prim. — Hispano Americano",
+    "Prim. — Instituto Americano Bilingüe John F. Kennedy",
+    "Prim. — Instituto María Canales",
+    "Prim. — Isabel Grasseteau",
+    "Prim. — Metropolitana",
+    "Prim. — Profr. Zeferino Aguirre",
+    "Prim. — Carlos Pellicer Cámara",
+  ];
+
   /* ---------- Validadores ---------- */
   const CURP_RE = /^[A-Z][AEIOUX][A-Z]{2}\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])[HM](AS|BC|BS|CC|CL|CM|CS|CH|DF|DG|GT|GR|HG|JC|MC|MN|MS|NT|NL|OC|PL|QT|QR|SP|SL|SR|TC|TS|TL|VZ|YN|ZS|NE)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d]\d$/;
   const RFC_RE = /^[A-ZÑ&]{3,4}\d{6}[A-Z\d]{3}$/;
-  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const EMAIL_RE = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i;
+  // Proveedores comunes para detectar dominios mal escritos (gmaol.cox → gmail.com).
+  const EMAIL_PROVEEDORES = ["gmail.com", "hotmail.com", "hotmail.es", "outlook.com", "outlook.es", "yahoo.com", "yahoo.com.mx", "live.com", "live.com.mx", "icloud.com", "prodigy.net.mx"];
+  function lev(a, b) {
+    const m = a.length, n = b.length, d = Array.from({ length: m + 1 }, (_, i) => [i].concat(Array(n).fill(0)));
+    for (let j = 0; j <= n; j++) d[0][j] = j;
+    for (let i = 1; i <= m; i++) for (let j = 1; j <= n; j++)
+      d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+    return d[m][n];
+  }
+  // Si el dominio se parece a un proveedor conocido pero no es igual, devuelve la sugerencia.
+  function emailTipo(v) {
+    const dom = (v || "").toLowerCase().split("@")[1] || "";
+    if (!dom || EMAIL_PROVEEDORES.includes(dom)) return "";
+    let best = "", bd = 99;
+    for (const p of EMAIL_PROVEEDORES) { const d = lev(dom, p); if (d < bd) { bd = d; best = p; } }
+    return bd <= 2 ? best : "";
+  }
   const V = {
     curp: (v) => CURP_RE.test((v || "").toUpperCase()),
     rfc: (v) => RFC_RE.test((v || "").toUpperCase()),
-    email: (v) => EMAIL_RE.test((v || "").trim()),
+    email: (v) => { const t = (v || "").trim().toLowerCase(); return EMAIL_RE.test(t) && !emailTipo(t); },
     tel: (v) => (v || "").replace(/\D/g, "").length === 10,
     cp: (v) => /^\d{5}$/.test((v || "").trim()),
     text: (v) => (v || "").trim().length >= 2,
@@ -801,6 +1098,7 @@ select.ctrl{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right
     const ok = V.curp(val);
     setFieldState(name, ok ? "valid" : (val.length >= 18 ? "error" : "idle"), ERR.curp);
     if (ok) revealIdentidad(val); else hideRenapo();
+    checkInitials();
     update();
   });
   curpEl.addEventListener("blur", () => {
@@ -814,6 +1112,7 @@ select.ctrl{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right
     state.curpInfo = null;
     renapoStatus.classList.add("hidden");
     renapoFields.classList.add("hidden");
+    applyAgeRules();
   }
 
   // Deriva fecha de nacimiento y sexo a partir de la propia CURP (sin RENAPO).
@@ -842,6 +1141,8 @@ select.ctrl{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right
       renapoFields.classList.remove("hidden");
       renapoFields.classList.add("fade-in");
     }
+    applyAgeRules();
+    recheckCourseAge();
   }
 
   function fmtDate(iso) { const [y, m, d] = iso.split("-"); return `${d}/${m}/${y}`; }
@@ -855,34 +1156,267 @@ select.ctrl{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right
   /* =================================================================
      2. Contacto — teléfonos, correo, CP autollenado
      ================================================================= */
-  ["celular", "telTutor", "telEmergencia"].forEach((id) => {
-    const el = $("#" + id);
-    el.addEventListener("input", () => { el.value = fmtPhone(el.value); });
+  // Parentescos en los selects de responsables y emergencia
+  const PARENTESCOS = ["Padre", "Madre", "Tutor(a)", "Abuelo(a)", "Tío(a)", "Hermano(a)", "Otro"];
+  $$(".parentesco").forEach((sel) => {
+    sel.innerHTML = '<option value="">Selecciona…</option>' + PARENTESCOS.map((p) => `<option>${p}</option>`).join("");
   });
-  bindField("celular", "tel");
-  bindField("correo", "email");
-  bindField("telTutor", "tel");
-  // tel emergencia: opcional, valida solo si hay algo
-  (function () {
-    const el = $("#telEmergencia"); const name = "telEmergencia";
+
+  // Un parentesco usado en un contacto se deshabilita en los demás ("Otro" sí se repite).
+  function refreshParentescos() {
+    const sels = $$(".parentesco");
+    const usados = sels.map((s) => s.value).filter((v) => v && v !== "Otro");
+    sels.forEach((sel) => {
+      Array.from(sel.options).forEach((opt) => {
+        if (!opt.value || opt.value === "Otro") { opt.disabled = false; return; }
+        opt.disabled = usados.includes(opt.value) && sel.value !== opt.value;
+      });
+    });
+  }
+  $$(".parentesco").forEach((s) => s.addEventListener("change", refreshParentescos));
+
+  // Formato de teléfono en todos los campos telefónicos
+  ["celular", "resp1Tel", "resp2Tel", "emergTel"].forEach((id) => {
+    const el = $("#" + id);
+    if (el) el.addEventListener("input", () => { el.value = fmtPhone(el.value); });
+  });
+
+  // Validador OPCIONAL reutilizable: valida formato solo si hay contenido.
+  function bindOptional(id, type) {
+    const el = $("#" + id); if (!el) return;
+    const wrap = el.closest("[data-field]");
+    const name = wrap ? wrap.dataset.field : id;
     const run = (reveal) => {
-      const has = el.value.trim().length > 0;
-      if (!has) { setFieldState(name, "idle"); update(); return; }
-      const ok = V.tel(el.value);
-      setFieldState(name, ok ? "valid" : (reveal ? "error" : "idle"), ERR.tel); update();
+      if (el.value.trim() === "") { setFieldState(name, "idle"); update(); return; }
+      const ok = V[type](el.value);
+      setFieldState(name, ok ? "valid" : (reveal ? "error" : "idle"), ERR[type]); update();
     };
     el.addEventListener("input", () => run(false));
     el.addEventListener("blur", () => run(true));
-    el._isValidOptional = () => el.value.trim() === "" || V.tel(el.value);
-  })();
+    el._isValidOptional = () => el.value.trim() === "" || V[type](el.value);
+  }
+
+  // Validador de correo: fuerza minúsculas y detecta dominios mal escritos.
+  function bindEmail(id, required) {
+    const el = $("#" + id); if (!el) return;
+    const wrap = el.closest("[data-field]");
+    const name = wrap ? wrap.dataset.field : id;
+    const run = (reveal) => {
+      if (el.value !== el.value.toLowerCase()) el.value = el.value.toLowerCase();
+      const v = el.value.trim();
+      if (v === "") { setFieldState(name, (required && reveal) ? "error" : "idle", "Este campo es obligatorio."); update(); return; }
+      if (!EMAIL_RE.test(v)) { setFieldState(name, reveal ? "error" : "idle", "Correo no válido (falta @ o dominio)."); update(); return; }
+      const sug = emailTipo(v);
+      if (sug) { setFieldState(name, reveal ? "error" : "idle", `¿Quisiste decir “@${sug}”? Revisa el dominio.`); update(); return; }
+      setFieldState(name, "valid"); update();
+    };
+    el.addEventListener("input", () => run(false));
+    el.addEventListener("blur", () => run(true));
+    el._isValid = () => V.email(el.value);
+    el._isValidOptional = () => el.value.trim() === "" || V.email(el.value);
+    el._validate = () => { run(true); return el._isValid(); };
+  }
+
+  // Celular y correo del ALUMNO: su obligatoriedad depende de la edad (ver applyAgeRules).
+  bindOptional("celular", "tel");
+  bindEmail("correo", false);
+
+  // Edad del alumno (desde la CURP) y reglas de contacto según edad.
+  function studentAge() { return state.curpInfo ? calcAge(state.curpInfo.fechaNac) : null; }
+  function celReq() { const a = studentAge(); return a === null || a >= 18; }   // <18: no se pide su teléfono
+  function mailReq() { const a = studentAge(); return a === null || a >= 15; }  // <15: no se pide su correo
+  function applyAgeRules() {
+    const a = studentAge();
+    // Celular del alumno: si es menor de edad, se bloquea (no puede anotarlo) y se vacía.
+    const celEl = $("#celular"), celReqEl = $('[data-field="celular"] .req'), celHint = $('[data-field="celular"] .hint');
+    const celOn = celReq();
+    celEl.disabled = !celOn;
+    if (celReqEl) celReqEl.style.display = celOn ? "" : "none";
+    if (!celOn) { celEl.value = ""; setFieldState("celular", "idle"); }
+    if (celHint) { const t = celOn ? "10 dígitos" : "No aplica para menores de edad."; celHint.innerHTML = t; celHint.dataset.default = t; }
+    // Correo del alumno: si es menor de 15, se bloquea y se vacía.
+    const mailEl = $("#correo"), mailReqEl = $('[data-field="correo"] .req'), mailHint = $('[data-field="correo"] .hint');
+    const mailOn = mailReq();
+    mailEl.disabled = !mailOn;
+    if (mailReqEl) mailReqEl.style.display = mailOn ? "" : "none";
+    if (!mailOn) { mailEl.value = ""; setFieldState("correo", "idle"); }
+    if (mailHint) {
+      const t = !mailOn ? "No aplica para menores de 15 años."
+        : (a !== null && a < 18) ? "Usa un correo al que el ALUMNO tenga acceso." : "";
+      mailHint.innerHTML = t; mailHint.dataset.default = t;
+    }
+    // Mayor de edad: preguntar dependiente/independiente. Menor: reiniciar.
+    if (a === null || a < 18) state.dependencia = null;
+    applyDependencia();
+    maybeAskDependencia();
+  }
+
+  // Dependiente / Independiente (solo aplica a mayores de 18 años).
+  function resp1Req() {
+    const a = studentAge();
+    if (a !== null && a >= 18 && state.dependencia === "Independiente") return false; // alumno independiente
+    return true;
+  }
+  function applyDependencia() {
+    const req = resp1Req();
+    ["resp1Nombre", "resp1Parentesco", "resp1Tel"].forEach((id) => {
+      const r = $(`[data-field="${id}"] .req`);
+      if (r) r.style.display = req ? "" : "none";
+      if (!req && !$("#" + id).value) setFieldState(id, "idle");
+    });
+  }
+  function maybeAskDependencia() {
+    const a = studentAge();
+    if (a !== null && a >= 18 && !state.dependencia) $("#depModal").classList.remove("hidden");
+  }
+  $$("#depModal [data-dep]").forEach((b) => b.addEventListener("click", () => {
+    state.dependencia = b.dataset.dep;
+    $("#depModal").classList.add("hidden");
+    applyDependencia(); update();
+  }));
+
+  // Responsable 1 (requerido, salvo alumno independiente)
+  bindField("resp1Nombre", "text");
+  bindField("resp1Tel", "tel");
+  bindEmail("resp1Correo", false);
+  $("#resp1Parentesco").addEventListener("change", () => { setFieldState("resp1Parentesco", $("#resp1Parentesco").value ? "valid" : "error", "Selecciona el parentesco."); update(); });
+  // Responsable 2 y contacto de emergencia (opcionales)
+  bindOptional("resp2Tel", "tel");
+  bindOptional("emergTel", "tel");
+
+  // ¿Se está llenando el Responsable 2 / el contacto de emergencia?
+  function r2Used() { return !!($("#resp2Nombre").value.trim() || $("#resp2Tel").value.trim() || $("#resp2Correo").value.trim() || $("#resp2Parentesco").value); }
+  function emergUsed() { return !!($("#emergNombre").value.trim() || $("#emergTel").value.trim() || $("#emergParentesco").value); }
+
+  // La emergencia no puede ser la misma persona/teléfono que un responsable.
+  const normNom = (s) => (s || "").toUpperCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^A-ZÑ]/g, "");
+  const tel10 = (s) => (s || "").replace(/\D/g, "");
+  function emergNameDup() {
+    const e = normNom($("#emergNombre").value); if (!e) return false;
+    return e === normNom($("#resp1Nombre").value) || (r2Used() && e === normNom($("#resp2Nombre").value));
+  }
+  function emergPhoneDup() {
+    const e = tel10($("#emergTel").value); if (e.length < 10) return false;
+    return e === tel10($("#resp1Tel").value) || e === tel10($("#resp2Tel").value);
+  }
+  // Avisos emergentes al salir de los campos de emergencia.
+  $("#emergNombre").addEventListener("blur", () => { if (emergNameDup()) openModal("Contacto de emergencia inválido", "El contacto de emergencia no puede ser la misma persona que un responsable. Coloca un contacto diferente."); });
+  $("#emergTel").addEventListener("blur", () => { if (emergPhoneDup()) openModal("Teléfono repetido", "El teléfono del contacto de emergencia no puede ser igual al de un responsable. Coloca un número diferente."); });
+
+  // Marca error/válido en los campos condicionales de R2 y emergencia.
+  function refreshConditionalContacts() {
+    if (r2Used()) {
+      setFieldState("resp2Nombre", V.text($("#resp2Nombre").value) ? "valid" : "error", "Falta el nombre.");
+      setFieldState("resp2Parentesco", $("#resp2Parentesco").value ? "valid" : "error", "Selecciona el parentesco.");
+    } else { setFieldState("resp2Nombre", "idle"); setFieldState("resp2Parentesco", "idle"); }
+    if (emergUsed()) {
+      setFieldState("emergNombre", (V.text($("#emergNombre").value) && !emergNameDup()) ? "valid" : "error", "Revisa el nombre.");
+      setFieldState("emergParentesco", $("#emergParentesco").value ? "valid" : "error", "Selecciona el parentesco.");
+    } else { setFieldState("emergNombre", "idle"); setFieldState("emergParentesco", "idle"); }
+    // Teléfono de emergencia: si está repetido con un responsable, márcalo en rojo.
+    if ($("#emergTel").value.trim() && emergPhoneDup()) setFieldState("emergTel", "error", "No puede ser igual al de un responsable.");
+  }
+  bindEmail("resp2Correo", false);
+  ["resp2Nombre", "emergNombre"].forEach((id) => $("#" + id).addEventListener("input", update));
+  $("#resp2Parentesco").addEventListener("change", update);
+  $("#emergParentesco").addEventListener("change", update);
+
+  // Salud / enfermedad (la descripción se pide solo si se activa)
+  const enfToggle = $("#enfermedadToggle"), enfSwitch = $("#enfermedadSwitch"), enfBody = $("#enfermedadBody");
+  $('label[for="enfermedadToggle"]').addEventListener("click", (e) => {
+    e.preventDefault();
+    enfToggle.checked = !enfToggle.checked;
+    state.enfermedad = enfToggle.checked;
+    enfSwitch.classList.toggle("on", state.enfermedad);
+    enfBody.classList.toggle("hidden", !state.enfermedad);
+    update();
+  });
+  bindOptional("enfermedadDesc", "text");
 
   bindField("paterno", "text");
   bindField("materno", "text");
   bindField("nombre", "text");
   bindField("calle", "text");
   bindField("numExt", "text");
-  bindField("tutor", "text");
+  // Escuela de procedencia: campo con búsqueda (escribe número o nombre y filtra).
+  $("#escuelasList").innerHTML = ESCUELAS.map((e) => `<option value="${e}"></option>`).join("");
   bindField("escuela", "text");
+  function getEscuela() { return $("#escuela").value.trim(); }
+
+  /* ---------- Verificación de iniciales contra la CURP (BLOQUEA el envío) ------
+     La CURP codifica: [inicial ap. paterno][1ª vocal interna ap. paterno]
+     [inicial ap. materno][inicial nombre]. Si no coinciden, NO deja enviar.
+     Se contemplan casos especiales: "María José", "De la Cruz", etc. */
+  const PARTICULAS = new Set(["DE", "DEL", "LA", "LAS", "LOS", "MC", "MAC", "VON", "VAN", "Y", "DI", "DA", "SAN", "SANTA"]);
+  const NOMBRES_COMUNES = new Set(["MARIA", "MA", "JOSE", "J"]);
+  const sinAcento = (s) => (s || "").toUpperCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+  const soloLetras = (s) => sinAcento(s).replace(/[^A-ZÑ ]/g, "").trim();
+  function palabraEfectiva(s) {           // primera palabra que no sea partícula
+    const w = soloLetras(s).split(/\s+/).filter(Boolean);
+    let i = 0;
+    while (i < w.length - 1 && PARTICULAS.has(w[i])) i++;
+    return w[i] || "";
+  }
+  function vocalInterna(w) {               // primera vocal después de la 1ª letra
+    for (let i = 1; i < w.length; i++) if ("AEIOU".includes(w[i])) return w[i];
+    return "X";
+  }
+  function letraNombre(s) {                // inicial del nombre (regla María/José)
+    const w = soloLetras(s).split(/\s+/).filter(Boolean);
+    if (!w.length) return "";
+    if (NOMBRES_COMUNES.has(w[0]) && w[1]) return w[1][0];
+    return w[0][0];
+  }
+  const eqLetra = (a, b) => a === b || (a === "X" && b === "Ñ") || (a === "Ñ" && b === "X");
+
+  // Funciones de coincidencia (true = coincide o campo vacío → no bloquean aquí).
+  function matchPaterno(cu) { const p = palabraEfectiva($("#paterno").value); return !p || (eqLetra(cu[0], p[0]) && eqLetra(cu[1], vocalInterna(p))); }
+  function matchMaterno(cu) { const m = palabraEfectiva($("#materno").value); return !m || eqLetra(cu[2], m[0]); }
+  function matchNombre(cu)  { const n = letraNombre($("#nombre").value);      return !n || eqLetra(cu[3], n); }
+
+  function makeWarn(name) {
+    const f = $(`[data-field="${name}"]`);
+    const d = document.createElement("div");
+    d.className = "ini-warn hidden";
+    f.appendChild(d);
+    return d;
+  }
+  const warnPat = makeWarn("paterno"), warnMat = makeWarn("materno"), warnNom = makeWarn("nombre");
+  function setWarn(el, msg) {
+    if (msg) { el.classList.remove("hidden"); el.innerHTML = ICON.alert + " " + msg; }
+    else { el.classList.add("hidden"); el.innerHTML = ""; }
+  }
+
+  // Evalúa un campo de nombre: marca error rojo + mensaje si no coincide con la CURP.
+  function evalName(id, warnEl, matchFn, letra) {
+    const val = $("#" + id).value.trim();
+    const cu = (curpEl.value || "").toUpperCase();
+    if (val.length < 2 || !V.curp(cu)) { setWarn(warnEl, ""); if (val.length >= 2) setFieldState(id, "valid"); return; }
+    if (matchFn(cu)) { setWarn(warnEl, ""); setFieldState(id, "valid"); }
+    else {
+      const campo = id === "paterno" ? "apellido paterno" : id === "materno" ? "apellido materno" : "nombre";
+      setWarn(warnEl, `Según tu CURP, tu ${campo} debería empezar con «${cu[letra]}». Corrígelo para poder enviar.`);
+      setFieldState(id, "error", "");
+    }
+  }
+  function checkInitials() {
+    evalName("paterno", warnPat, matchPaterno, 0);
+    evalName("materno", warnMat, matchMaterno, 2);
+    evalName("nombre",  warnNom, matchNombre,  3);
+  }
+  // Al salir del campo, si no coincide con la CURP, muestra ventana emergente.
+  function popupField(id, matchFn, idx) {
+    const cu = (curpEl.value || "").toUpperCase();
+    if (V.curp(cu) && $("#" + id).value.trim() && !matchFn(cu)) {
+      const campo = id === "paterno" ? "apellido paterno" : id === "materno" ? "apellido materno" : "nombre";
+      openModal("Revisa el " + campo, `El ${campo} no coincide con la CURP: debería empezar con «${cu[idx]}». Corrígelo para poder enviar.`);
+    }
+  }
+  const NAME_MATCH = { paterno: [matchPaterno, 0], materno: [matchMaterno, 2], nombre: [matchNombre, 3] };
+  ["paterno", "materno", "nombre"].forEach((id) => {
+    $("#" + id).addEventListener("input", checkInitials);
+    $("#" + id).addEventListener("blur", () => { checkInitials(); popupField(id, NAME_MATCH[id][0], NAME_MATCH[id][1]); });
+  });
 
   // CP autollenado (consulta SEPOMEX en línea con respaldo manual)
   const cpEl = $("#cp"), coloniaSel = $("#colonia");
@@ -1035,7 +1569,52 @@ select.ctrl{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right
     coursesWrap.appendChild(el);
   });
 
+  // --- Restricción de edad por curso ---
+  function ageFits(c, a) {
+    if (a === null) return true;                 // sin CURP aún: no se bloquea
+    if (c.minEdad != null && a < c.minEdad) return false;
+    if (c.maxEdad != null && a > c.maxEdad) return false;
+    return true;
+  }
+  function courseAgeMsg(c) {
+    const lo = c.minEdad, hi = c.maxEdad;
+    if (lo != null && hi != null) return `El curso “${c.name}” es para edades de ${lo} a ${hi} años.`;
+    if (lo != null) return `El curso “${c.name}” es para mayores de ${lo} años.`;
+    if (hi != null) return `El curso “${c.name}” es para menores de ${hi} años.`;
+    return "";
+  }
+  // Ventana emergente genérica (se reutiliza para edad, CURP y emergencia)
+  function openModal(title, msg) {
+    $("#ageModalTitle").textContent = title;
+    $("#ageModalMsg").textContent = msg;
+    $("#ageModal").classList.remove("hidden");
+  }
+  function openAgeModal(c, a) {
+    const extra = a != null ? ` Según tu CURP, el alumno tiene ${a} años.` : "";
+    openModal("Este curso no es para esa edad", courseAgeMsg(c) + extra);
+  }
+  $("#ageModalClose").addEventListener("click", () => $("#ageModal").classList.add("hidden"));
+  $("#ageModal").addEventListener("click", (e) => { if (e.target.id === "ageModal") $("#ageModal").classList.add("hidden"); });
+
+  function clearCourseSelection() {
+    state.course = null; state.horario = null;
+    $$(".course").forEach((el) => {
+      el.classList.remove("sel"); el.setAttribute("aria-checked", "false");
+      const ex = el.querySelector(".course-extra"); if (ex) ex.innerHTML = "";
+    });
+  }
+  // Si cambia la CURP y el curso ya elegido no corresponde a la edad, avisa y lo quita.
+  function recheckCourseAge() {
+    if (!state.course) return;
+    const c = COURSES.find((x) => x.id === state.course);
+    const a = studentAge();
+    if (c && !ageFits(c, a)) { openAgeModal(c, a); clearCourseSelection(); update(); }
+  }
+
   function selectCourse(id) {
+    const cObj = COURSES.find((x) => x.id === id);
+    const a = studentAge();
+    if (cObj && !ageFits(cObj, a)) { openAgeModal(cObj, a); return; }   // no permite elegirlo
     state.course = id; state.horario = null;
     $$(".course").forEach((el) => {
       const on = el.dataset.course === id;
@@ -1102,7 +1681,7 @@ select.ctrl{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right
      7. Factura toggle
      ================================================================= */
   const facturaToggle = $("#facturaToggle"), facturaSwitch = $("#facturaSwitch"), invoiceBody = $("#invoiceBody");
-  $(".toggle-row").addEventListener("click", (e) => {
+  $('label[for="facturaToggle"]').addEventListener("click", (e) => {
     e.preventDefault();
     facturaToggle.checked = !facturaToggle.checked;
     state.factura = facturaToggle.checked;
@@ -1121,7 +1700,7 @@ select.ctrl{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right
   rfcEl.addEventListener("input", () => { rfcEl.value = rfcEl.value.toUpperCase().replace(/[^A-ZÑ&0-9]/g, "").slice(0, 13); });
   bindField("rfc", "rfc");
   bindField("cpFiscal", "cp");
-  bindField("correoFiscal", "email");
+  bindEmail("correoFiscal", true);
 
   /* =================================================================
      Validación global + gating del botón
@@ -1131,18 +1710,30 @@ select.ctrl{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right
     { key: "Apellido paterno", ok: () => $("#paterno")._isValid() },
     { key: "Apellido materno", ok: () => $("#materno")._isValid() },
     { key: "Nombre(s)", ok: () => $("#nombre")._isValid() },
-    { key: "Celular", ok: () => $("#celular")._isValid() },
-    { key: "Correo", ok: () => $("#correo")._isValid() },
+    { key: "Apellido paterno acorde a la CURP", ok: () => !V.curp(curpEl.value) || matchPaterno(curpEl.value.toUpperCase()) },
+    { key: "Apellido materno acorde a la CURP", ok: () => !V.curp(curpEl.value) || matchMaterno(curpEl.value.toUpperCase()) },
+    { key: "Nombre acorde a la CURP", ok: () => !V.curp(curpEl.value) || matchNombre(curpEl.value.toUpperCase()) },
+    { key: "Celular del alumno", ok: () => !celReq() || V.tel($("#celular").value) },
+    { key: "Correo del alumno", ok: () => !mailReq() || V.email($("#correo").value) },
     { key: "Código postal", ok: () => V.cp(cpEl.value) && state.cpData },
     { key: "Calle", ok: () => $("#calle")._isValid() },
     { key: "Número exterior", ok: () => $("#numExt")._isValid() },
-    { key: "Nombre del tutor", ok: () => $("#tutor")._isValid() },
-    { key: "Teléfono del tutor", ok: () => $("#telTutor")._isValid() },
-    { key: "Escuela de procedencia", ok: () => $("#escuela")._isValid() },
+    { key: "Nombre del Responsable 1", ok: () => !resp1Req() || $("#resp1Nombre")._isValid() },
+    { key: "Parentesco del Responsable 1", ok: () => !resp1Req() || !!$("#resp1Parentesco").value },
+    { key: "Teléfono del Responsable 1", ok: () => !resp1Req() || $("#resp1Tel")._isValid() },
+    { key: "Correo del Responsable 1 válido", ok: () => $("#resp1Correo")._isValidOptional() },
+    { key: "Nombre del Responsable 2", ok: () => !r2Used() || V.text($("#resp2Nombre").value) },
+    { key: "Parentesco del Responsable 2", ok: () => !r2Used() || !!$("#resp2Parentesco").value },
+    { key: "Teléfono del Responsable 2 válido", ok: () => $("#resp2Tel")._isValidOptional() },
+    { key: "Nombre del contacto de emergencia", ok: () => !emergUsed() || V.text($("#emergNombre").value) },
+    { key: "Parentesco del contacto de emergencia", ok: () => !emergUsed() || !!$("#emergParentesco").value },
+    { key: "Emergencia distinta a los responsables", ok: () => !(emergNameDup() || emergPhoneDup()) },
+    { key: "Escuela de procedencia", ok: () => !!getEscuela() },
     { key: "Nivel de estudios", ok: () => !!$("#nivel").value },
     { key: "Curso", ok: () => !!state.course },
     { key: "Horario del curso", ok: () => !!state.horario },
-    { key: "Teléfono de emergencia válido", ok: () => $("#telEmergencia")._isValidOptional() },
+    { key: "Descripción de enfermedad", ok: () => !state.enfermedad || V.text($("#enfermedadDesc").value) },
+    { key: "Teléfono de emergencia válido", ok: () => $("#emergTel")._isValidOptional() },
     { key: "Comprobante de pago", ok: () => !!state.comprobante },
   ];
   const INVOICE_REQ = [
@@ -1155,9 +1746,9 @@ select.ctrl{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right
 
   // mapa sección → llaves requeridas para marcar "completa"
   const SEC_REQ = {
-    "sec-ident": ["CURP", "Apellido paterno", "Apellido materno", "Nombre(s)"],
-    "sec-contacto": ["Celular", "Correo", "Código postal", "Calle", "Número exterior"],
-    "sec-tutor": ["Nombre del tutor", "Teléfono del tutor", "Teléfono de emergencia válido"],
+    "sec-ident": ["CURP", "Apellido paterno", "Apellido materno", "Nombre(s)", "Apellido paterno acorde a la CURP", "Apellido materno acorde a la CURP", "Nombre acorde a la CURP"],
+    "sec-contacto": ["Celular del alumno", "Correo del alumno", "Código postal", "Calle", "Número exterior"],
+    "sec-tutor": ["Nombre del Responsable 1", "Parentesco del Responsable 1", "Teléfono del Responsable 1", "Correo del Responsable 1 válido", "Nombre del Responsable 2", "Parentesco del Responsable 2", "Teléfono del Responsable 2 válido", "Nombre del contacto de emergencia", "Parentesco del contacto de emergencia", "Emergencia distinta a los responsables", "Descripción de enfermedad", "Teléfono de emergencia válido"],
     "sec-academico": ["Escuela de procedencia", "Nivel de estudios"],
     "sec-curso": ["Curso", "Horario del curso"],
     "sec-comprobante": ["Comprobante de pago"],
@@ -1166,6 +1757,7 @@ select.ctrl{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right
   const submitBtn = $("#submitBtn"), submitNote = $("#submitNote"), missingBox = $("#missingBox");
 
   function update() {
+    refreshConditionalContacts();
     const reqs = REQUIRED.concat(state.factura ? INVOICE_REQ : []);
     const results = {};
     reqs.forEach((r) => { results[r.key] = r.ok(); });
@@ -1243,11 +1835,21 @@ select.ctrl{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right
       calle: v("calle"),
       numExt: v("numExt"),
       numInt: v("numInt"),
-      tutor: v("tutor"),
-      telTutor: v("telTutor"),
-      emergencia: v("emergencia"),
-      telEmergencia: v("telEmergencia"),
-      escuela: v("escuela"),
+      dependencia: state.curpInfo && calcAge(state.curpInfo.fechaNac) >= 18 ? (state.dependencia || "") : "Menor de edad",
+      resp1Nombre: v("resp1Nombre"),
+      resp1Parentesco: $("#resp1Parentesco").value,
+      resp1Tel: v("resp1Tel"),
+      resp1Correo: v("resp1Correo"),
+      resp2Nombre: v("resp2Nombre"),
+      resp2Parentesco: $("#resp2Parentesco").value,
+      resp2Tel: v("resp2Tel"),
+      resp2Correo: v("resp2Correo"),
+      enfermedad: state.enfermedad ? "Sí" : "No",
+      enfermedadDesc: state.enfermedad ? v("enfermedadDesc") : "",
+      emergencia: v("emergNombre"),
+      emergParentesco: $("#emergParentesco").value,
+      telEmergencia: v("emergTel"),
+      escuela: getEscuela(),
       nivel: $("#nivel").value,
       curso: courseObj ? courseObj.name : "",
       horario: state.horario === "particular" ? "Por confirmar (clase particular)" : (state.horario || ""),
@@ -1263,6 +1865,22 @@ select.ctrl{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right
   function finishOk(folio, nombreCompleto) {
     $("#confirmFolio").textContent = folio;
     if (nombreCompleto) $("#confirmLead").innerHTML = `Recibimos los datos de <b>${nombreCompleto}</b> correctamente. El equipo de CONAMAT los revisará y completará el registro.`;
+    // Aviso unificado: mensaje según la edad real + detalles del curso + horario.
+    const edadAlumno = state.curpInfo ? calcAge(state.curpInfo.fechaNac) : null;
+    let base = "Deberás acudir al plantel a firmar los documentos de inscripción.";
+    if (edadAlumno !== null && edadAlumno < 18) base += " Por ser menor de edad, el alumno deberá presentarse acompañado de un adulto (padre, madre o tutor).";
+    const extras = [];
+    const VERANO = ["verano-explora", "aprendizaje-movimiento", "prepa-ready"];
+    if (state.course === "colbach") {
+      extras.push("Paga el material en efectivo: <b>$1,850</b>.");
+    } else if (VERANO.includes(state.course)) {
+      extras.push("Paga <b>$250 en efectivo</b> (seguro, ya incluido en el precio del curso).");
+      extras.push("Completa el proceso <b>antes del inicio del curso</b>.");
+      extras.push("Lleva <b>2 fotografías tamaño infantil</b> del alumno, recientes (máximo 3 meses), para su expediente y credencial.");
+    }
+    extras.push("Horario de atención en plantel: <b>lunes a viernes de 8:00 a 20:00 h</b>; <b>sábado y domingo de 9:00 a 13:00 h</b>.");
+    $("#confirmNoteDesc").innerHTML = base
+      + "<ul style='margin:8px 0 0;padding-left:18px'>" + extras.map((e) => `<li style='margin:3px 0'>${e}</li>`).join("") + "</ul>";
     try { localStorage.removeItem(DRAFT_KEY); } catch (_) {}
     $("#formView").classList.add("hidden");
     $("#confirmView").classList.remove("hidden");
@@ -1281,7 +1899,16 @@ select.ctrl{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right
     e.preventDefault();
     if (submitBtn.disabled) {
       // revelar errores
-      ["paterno", "materno", "nombre", "celular", "correo", "calle", "numExt", "tutor", "telTutor", "escuela"].forEach((id) => $("#" + id)._validate && $("#" + id)._validate());
+      ["paterno", "materno", "nombre", "calle", "numExt"].forEach((id) => $("#" + id)._validate && $("#" + id)._validate());
+      if (celReq() && !V.tel($("#celular").value)) setFieldState("celular", "error", ERR.tel);
+      if (mailReq() && !V.email($("#correo").value)) setFieldState("correo", "error", ERR.email);
+      if (resp1Req()) {
+        $("#resp1Nombre")._validate(); $("#resp1Tel")._validate();
+        if (!$("#resp1Parentesco").value) setFieldState("resp1Parentesco", "error", "Selecciona el parentesco.");
+      }
+      if (!getEscuela()) setFieldState("escuela", "error", "Selecciona o escribe tu escuela.");
+      if (state.enfermedad && !V.text($("#enfermedadDesc").value)) setFieldState("enfermedadDesc", "error", "Describe la condición.");
+      checkInitials();
       if (!$("#nivel").value) setFieldState("nivel", "error", "Selecciona un nivel.");
       // mostrar lista de faltantes
       if (state._missing && state._missing.length) {
@@ -1289,6 +1916,40 @@ select.ctrl{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right
       }
       return;
     }
+    // Todo válido: mostrar la tabla de confirmación antes de enviar.
+    showConfirmModal();
+  });
+
+  // Construye y muestra la ventana con el resumen de datos del alumno.
+  function escapeHtml(s) { return String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
+  function showConfirmModal() {
+    const p = buildPayload();
+    const rows = [];
+    const add = (k, v) => { if (v != null && String(v).trim() !== "") rows.push([k, String(v)]); };
+    add("Nombre", `${p.nombre} ${p.apellidoPaterno} ${p.apellidoMaterno}`.replace(/\s+/g, " ").trim());
+    add("CURP", p.curp);
+    add("Nacimiento", [p.fechaNacimiento ? fmtDate(p.fechaNacimiento) : "", p.edad !== "" ? p.edad + " años" : "", p.sexo].filter(Boolean).join(" · "));
+    if (p.dependencia && p.dependencia !== "Menor de edad") add("Tipo de alumno", p.dependencia);
+    add("Celular del alumno", p.celular);
+    add("Correo del alumno", p.correo);
+    add("Domicilio", [[p.calle, p.numExt].filter(Boolean).join(" "), p.numInt ? "Int. " + p.numInt : "", p.colonia, p.cp, p.municipio, p.estado].filter(Boolean).join(", "));
+    add("Responsable 1", `${p.resp1Nombre}${p.resp1Parentesco ? " (" + p.resp1Parentesco + ")" : ""}${p.resp1Tel ? " · " + p.resp1Tel : ""}`);
+    if (p.resp2Nombre) add("Responsable 2", `${p.resp2Nombre}${p.resp2Parentesco ? " (" + p.resp2Parentesco + ")" : ""}${p.resp2Tel ? " · " + p.resp2Tel : ""}`);
+    if (p.emergencia) add("Emergencia", `${p.emergencia}${p.emergParentesco ? " (" + p.emergParentesco + ")" : ""}${p.telEmergencia ? " · " + p.telEmergencia : ""}`);
+    add("Escuela", p.escuela);
+    add("Nivel", p.nivel);
+    add("Curso", `${p.curso}${p.horario ? " · " + p.horario : ""}`);
+    if (p.enfermedad === "Sí") add("Enfermedad", p.enfermedadDesc || "Sí");
+    if (p.requiereFactura === "Sí") add("Factura", "RFC " + p.rfc);
+    $("#confirmTableBody").innerHTML = rows.map(([k, v]) => `<tr><th>${k}</th><td>${escapeHtml(v)}</td></tr>`).join("");
+    $("#confirmDataModal").classList.remove("hidden");
+  }
+  $("#confirmEditBtn").addEventListener("click", () => $("#confirmDataModal").classList.add("hidden"));
+  $("#confirmDataModal").addEventListener("click", (e) => { if (e.target.id === "confirmDataModal") $("#confirmDataModal").classList.add("hidden"); });
+  $("#confirmSendBtn").addEventListener("click", () => { $("#confirmDataModal").classList.add("hidden"); doSubmit(); });
+
+  // Envío real (tras confirmar en la ventana).
+  async function doSubmit() {
     submitBtn.disabled = true;
     submitBtn.querySelector("#submitLabel").textContent = "Enviando…";
     submitBtn.insertAdjacentHTML("afterbegin", ICON.spin);
@@ -1324,18 +1985,18 @@ select.ctrl{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right
     } catch (err) {
       submitError("No pudimos enviar tu inscripción (" + (err.message || "error de red") + "). Revisa tu conexión e inténtalo de nuevo.");
     }
-  });
+  }
 
   /* =================================================================
      Borrador automático — guarda el avance en el navegador
      ================================================================= */
   const DRAFT_KEY = "conamat_inscripcion_draft_v1";
-  const DRAFT_IDS = ["curp", "paterno", "materno", "nombre", "celular", "correo", "cp", "colonia", "calle", "numExt", "numInt", "tutor", "telTutor", "emergencia", "telEmergencia", "escuela", "nivel", "rfc", "cpFiscal", "regimen", "correoFiscal"];
+  const DRAFT_IDS = ["curp", "paterno", "materno", "nombre", "celular", "correo", "cp", "colonia", "calle", "numExt", "numInt", "resp1Nombre", "resp1Parentesco", "resp1Tel", "resp1Correo", "resp2Nombre", "resp2Parentesco", "resp2Tel", "resp2Correo", "enfermedadDesc", "emergNombre", "emergParentesco", "emergTel", "escuela", "nivel", "rfc", "cpFiscal", "regimen", "correoFiscal"];
   let draftTimer = null;
   function saveDraft() {
     clearTimeout(draftTimer);
     draftTimer = setTimeout(() => {
-      const d = { factura: state.factura, course: state.course, horario: state.horario };
+      const d = { factura: state.factura, enfermedad: state.enfermedad, course: state.course, horario: state.horario };
       DRAFT_IDS.forEach((id) => { const el = $("#" + id); if (el) d[id] = el.value; });
       try { localStorage.setItem(DRAFT_KEY, JSON.stringify(d)); } catch (_) {}
     }, 400);
@@ -1343,7 +2004,8 @@ select.ctrl{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right
   function restoreDraft() {
     let d; try { d = JSON.parse(localStorage.getItem(DRAFT_KEY) || "null"); } catch (_) { d = null; }
     if (!d) return;
-    if (d.factura) $(".toggle-row").click();            // abre la sección de factura
+    if (d.factura) $('label[for="facturaToggle"]').click();      // abre la sección de factura
+    if (d.enfermedad) $('label[for="enfermedadToggle"]').click(); // abre la descripción de enfermedad
     const order = ["curp", "cp", "colonia", "nivel", "regimen"].concat(DRAFT_IDS);
     const seen = new Set();
     order.forEach((id) => {
@@ -1363,6 +2025,8 @@ select.ctrl{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right
 
   // init
   restoreDraft();
+  applyAgeRules();
+  refreshParentescos();
   update();
 })();
 
