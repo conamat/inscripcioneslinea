@@ -165,7 +165,11 @@ select.ctrl{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right
 .course.sel .radio{border-color:var(--navy);}
 .course.sel .radio::after{content:"";width:11px;height:11px;border-radius:99px;background:var(--navy);}
 .course .c-name{font-size:15.5px;font-weight:700;flex:1;}
-.course .c-desc{font-size:13.5px;color:var(--text-2);margin:0 0 12px;}
+.course .c-desc{font-size:13.5px;color:var(--text-2);margin:0 0 10px;}
+.course .c-meta{list-style:none;margin:0 0 12px;padding:0;display:flex;flex-direction:column;gap:6px;}
+.course .c-meta li{display:flex;align-items:flex-start;gap:8px;font-size:12.5px;color:var(--text-2);line-height:1.35;}
+.course .c-meta li svg{flex-shrink:0;margin-top:1px;color:var(--navy);opacity:.85;}
+.course.sel .c-meta li svg{color:var(--navy);opacity:1;}
 .type-badge{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:6px;}
 .type-badge.grupo{background:var(--navy-soft-2);color:var(--navy);}
 .type-badge.particular{background:#f3e8ff;color:#7c3aed;}
@@ -618,18 +622,51 @@ select.ctrl{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right
 
   // Catálogo de cursos (configurable por el administrador)
   const COURSES = [
-    { id: "comipems", name: "Intensivo COMIPEMS", tipo: "Grupo",
-      desc: "Preparación completa para el examen de admisión a bachillerato.",
-      horarios: ["Lun–Vie 16:00", "Lun–Vie 18:30", "Sáb 09:00"] },
-    { id: "olimpiada", name: "Olimpiada de Matemáticas", tipo: "Grupo",
-      desc: "Entrenamiento para concursos y razonamiento avanzado.",
-      horarios: ["Mar y Jue 17:00", "Sáb 11:00"] },
-    { id: "regular", name: "Regularización Escolar", tipo: "Grupo",
-      desc: "Apoyo por temas para primaria y secundaria.",
-      horarios: ["Lun y Mié 15:00", "Sáb 10:00"] },
-    { id: "particular", name: "Clase Particular", tipo: "Particular",
-      desc: "Atención uno a uno, plan personalizado a tu ritmo.",
+    // --- COLBACH 130 hrs (examen admisión bachillerato · Solo Hidalgo) ---
+    { id: "colbach", name: "COLBACH 130 hrs", tipo: "Grupo",
+      desc: "Prepa en un solo examen: preparación para el examen único de bachillerato (Septiembre 2026).",
+      para: "Aspirantes a bachillerato", plantel: "Solo Hidalgo",
+      horarios: ["Inicio 15 jun · L–V 08:00–11:00", "Inicio 6 jul · L–V 08:00–11:00", "Inicio 20 jul · L–V 08:00–11:00"] },
+
+    // --- Diplomados (sabatinos) ---
+    { id: "dip-kids", name: "Diplomado Kids", tipo: "Grupo",
+      desc: "Reforzamiento sabatino de matemáticas.",
+      para: "4°, 5° y 6° de primaria", plantel: "San Cosme", periodo: "Inicia 12 sep",
+      horarios: ["Sábados 09:00–14:00"] },
+    { id: "dip-junior", name: "Diplomado Junior", tipo: "Grupo",
+      desc: "Reforzamiento sabatino de matemáticas.",
+      para: "1°, 2° y 3° de secundaria", plantel: "San Cosme", periodo: "Inicia 12 sep",
+      horarios: ["Sábados 09:00–14:00"] },
+    { id: "dip-master", name: "Diplomado Master", tipo: "Grupo",
+      desc: "Nivel avanzado de matemáticas.",
+      para: "Nivel medio superior", plantel: "San Cosme", periodo: "Inicia 18 jul",
+      materias: "Aritmética, álgebra, geometría, trigonometría, cálculo diferencial e integral",
+      horarios: ["Sábados 09:00–14:00"] },
+    { id: "dip-ingles", name: "Diplomado Inglés", tipo: "Grupo",
+      desc: "Diplomado de inglés sabatino.",
+      plantel: "San Cosme", periodo: "Inicia 5 sep",
+      horarios: ["Sábados 09:00–14:00"] },
+    { id: "dip-regularizacion", name: "Diplomado en Regularización", tipo: "Particular",
+      desc: "Clases semi-individuales, a tu ritmo.",
+      para: "Todos los niveles", periodo: "La fecha de término depende del avance del alumno",
       horarios: [] },
+
+    // --- Cursos de Verano (lunes a viernes) ---
+    { id: "verano-explora", name: "Verano Explora", tipo: "Grupo",
+      desc: "Curso de verano lúdico y formativo.",
+      para: "Primaria · 8 a 11 años", plantel: "San Cosme", periodo: "20 jul – 21 ago",
+      materias: "Matemáticas, Scratch, Ciencias, Inglés, Expresión",
+      horarios: ["L–V 09:00–14:00"] },
+    { id: "aprendizaje-movimiento", name: "Aprendizaje en Movimiento", tipo: "Grupo",
+      desc: "Curso de verano de reforzamiento.",
+      para: "Pasan a 2° y 3° de secundaria", plantel: "Hidalgo", periodo: "27 jul – 21 ago",
+      materias: "Matemáticas, Física, Química, Comprensión Lectora",
+      horarios: ["L–V 09:00–13:00"] },
+    { id: "prepa-ready", name: "Prepa Ready", tipo: "Grupo",
+      desc: "Curso de verano de transición a la prepa.",
+      para: "Terminaron la secundaria", plantel: "San Cosme", periodo: "20 jul – 21 ago",
+      materias: "IA, Roblox, Word, PowerPoint, Lógica, Inglés, Expresión",
+      horarios: ["L–V 09:00–14:00"] },
   ];
 
   // Regímenes fiscales SAT vigentes
@@ -958,6 +995,23 @@ select.ctrl{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right
      5. Cursos
      ================================================================= */
   const coursesWrap = $("#courses");
+  // Iconos para la ficha de cada curso
+  const ICON_META = {
+    para: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm-7 8a7 7 0 0 1 14 0"/></svg>',
+    plantel: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.4"/></svg>',
+    periodo: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M4 9h16M8 3v4M16 3v4"/></svg>',
+    materias: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h9l4 4v12H6z"/><path d="M9 12h7M9 16h5"/></svg>',
+  };
+  // Construye la lista de datos (para quién, plantel, fechas, materias) de un curso.
+  function courseMeta(c) {
+    const rows = [];
+    if (c.para) rows.push(["para", c.para]);
+    if (c.plantel) rows.push(["plantel", "Plantel " + c.plantel]);
+    if (c.periodo) rows.push(["periodo", c.periodo]);
+    if (c.materias) rows.push(["materias", c.materias]);
+    if (!rows.length) return "";
+    return '<ul class="c-meta">' + rows.map(([k, t]) => `<li>${ICON_META[k]}<span>${t}</span></li>`).join("") + "</ul>";
+  }
   COURSES.forEach((c) => {
     const el = document.createElement("div");
     el.className = "course"; el.dataset.course = c.id; el.tabIndex = 0;
@@ -974,6 +1028,7 @@ select.ctrl{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right
         </span>
       </div>
       <p class="c-desc">${c.desc}</p>
+      ${courseMeta(c)}
       <div class="course-extra"></div>`;
     el.addEventListener("click", () => selectCourse(c.id));
     el.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); selectCourse(c.id); } });
