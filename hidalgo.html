@@ -2418,10 +2418,11 @@ input.ctrl:not([type="email"])::placeholder{text-transform:none;}
     return null; // escrita a mano → no se verifica
   }
   function nivelEdadOk() {
+    // Solo se valida que NO sea demasiado joven; un adulto sí puede tener un nivel menor.
     const v = $("#nivel").value; if (!v || v === "Otro") return true;
     const info = NIVELES.find((x) => x.n === v); const a = studentAge();
     if (a == null || !info || info.min == null) return true;
-    return a >= info.min && a <= info.max;
+    return a >= info.min;
   }
   function nivelEscuelaOk() {
     const v = $("#nivel").value; if (!v || v === "Otro") return true;
@@ -2429,12 +2430,12 @@ input.ctrl:not([type="email"])::placeholder{text-transform:none;}
     if (!ec || !nc) return true;
     return ec === nc;
   }
-  // La escuela (según su nivel) debe corresponder a la edad del alumno.
+  // La escuela: solo se valida que el alumno NO sea demasiado joven para ese nivel de escuela.
   function escuelaEdadOk() {
     const ec = escCat(getEscuela()), a = studentAge();
     if (!ec || a == null) return true;
-    const R = { primaria: [5, 13], secundaria: [11, 16], bachillerato: [14, 30], universidad: [17, 99] }[ec];
-    return a >= R[0] && a <= R[1];
+    const MIN = { primaria: 5, secundaria: 11, bachillerato: 14, universidad: 17 }[ec];
+    return a >= MIN;
   }
   function validarNivelUI() {
     const v = $("#nivel").value;
