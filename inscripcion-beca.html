@@ -458,7 +458,7 @@
     var nombreCompleto = apellidoPaterno + ' ' + apellidoMaterno + ', ' + nombres;
 
     var horarioInput = document.querySelector('input[name="horario"]:checked');
-    var horarioTexto = horarioInput ? horarioInput.closest('.radio-row').querySelector('b').textContent + ' (' + horarioInput.closest('.radio-row').querySelector('span').textContent + ')' : '';
+    var horarioTexto = horarioInput ? horarioInput.closest('.radio-row').querySelector('b').textContent + ' (' + horarioInput.closest('.radio-row').querySelector('.rtext span').textContent + ')' : '';
 
     var email = document.getElementById('email').value.trim();
     var escuela = document.getElementById('escuela').value;
