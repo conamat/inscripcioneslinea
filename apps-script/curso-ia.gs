@@ -74,25 +74,93 @@ function obtenerHoja_() {
 }
 
 function enviarConfirmacion_(d) {
-  const asunto = "Registro recibido · Curso de Inducción a la IA · CONAMAT";
+  const asunto = "Tu lugar en el Curso de IA · Domingo 18 de octubre · CONAMAT San Cosme";
+  const mapa = "https://www.google.com/maps/search/?api=1&query=CONAMAT+San+Cosme+Joaqu%C3%ADn+Garc%C3%ADa+Icazbalceta+57+San+Rafael+06470";
+  const logo = "https://conamat.github.io/inscripcioneslinea/logo-conamat.png";
+  const F = "font-family:Arial,Helvetica,sans-serif;";
+  const fila = (etq, val) =>
+    '<tr><td style="' + F + 'padding:10px 0;border-bottom:1px solid #e3e8f2;width:110px;font-size:13px;color:#6b7591;vertical-align:top">' + etq + '</td>' +
+    '<td style="' + F + 'padding:10px 0;border-bottom:1px solid #e3e8f2;font-size:15px;color:#15203d;vertical-align:top">' + val + '</td></tr>';
+  const check = (txt) =>
+    '<tr><td style="padding:6px 10px 6px 0;vertical-align:top;width:26px">' +
+    '<div style="' + F + 'width:22px;height:22px;line-height:22px;border-radius:11px;background:#e6f6ed;color:#1f9d57;font-size:13px;font-weight:bold;text-align:center">✓</div></td>' +
+    '<td style="' + F + 'padding:6px 0;font-size:15px;line-height:1.45;color:#15203d">' + txt + '</td></tr>';
+
   const html =
-    '<div style="font-family:Arial,sans-serif;color:#15203d;max-width:520px">' +
-    '<h2 style="color:#14275a">¡Hola, ' + escapar_(d.nombre) + '!</h2>' +
-    '<p>Recibimos tu registro al <b>Curso de Inducción a la Inteligencia Artificial</b> ' +
-    'de CONAMAT Plantel Hidalgo – San Cosme.</p>' +
-    '<p>Tu folio es: <b style="font-size:18px">' + escapar_(d.folio) + '</b></p>' +
-    '<p style="background:#14275a;color:#fff;padding:12px 16px;border-radius:10px;font-size:16px">' +
-    '<b>Domingo 18 de octubre de 2026</b><br>De 9:00 a 13:00 h<br><br>' +
-    '<b>CONAMAT Plantel San Cosme</b><br>Joaquín García Icazbalceta 57, col. San Rafael, ' +
-    'alcaldía Cuauhtémoc, C.P. 06470, CDMX</p>' +
-    '<p><a href="https://www.google.com/maps/search/?api=1&query=CONAMAT+San+Cosme+Joaqu%C3%ADn+Garc%C3%ADa+Icazbalceta+57+San+Rafael+06470">Ver ubicación en Google Maps</a></p>' +
-    '<p><b>El cupo es limitado</b> y tu registro aparta un lugar. ¡Te esperamos!</p>' +
-    '<p><b>No olvides traer:</b></p><ul>' +
-    '<li>Tu equipo de cómputo (laptop cargada y su cargador).</li>' +
-    '<li>Tu correo <b>@gmail.com</b> y su contraseña, para crear tus cuentas en las herramientas de IA.</li></ul>' +
-    '<p style="color:#525e7a">Ing. Itzel Guerrero<br>Departamento de Vinculación<br>CONAMAT Hidalgo – San Cosme</p>' +
+    '<div style="margin:0;padding:24px 12px;background:#f1f4f9">' +
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;margin:0 auto;background:#ffffff;border-radius:14px;overflow:hidden;border:1px solid #dbe2ee">' +
+
+    // Logo
+    '<tr><td style="padding:22px 28px 18px;border-bottom:4px solid #14275a">' +
+    '<img src="' + logo + '" width="300" alt="CONAMAT · Plantel Hidalgo – San Cosme" style="display:block;width:300px;max-width:100%;height:auto;border:0"></td></tr>' +
+
+    // Saludo
+    '<tr><td style="' + F + 'padding:28px 28px 8px">' +
+    '<div style="font-size:13px;font-weight:bold;letter-spacing:1px;color:#1f9d57;text-transform:uppercase">Registro confirmado</div>' +
+    '<h1 style="margin:8px 0 10px;font-size:24px;line-height:1.25;color:#14275a">¡Hola, ' + escapar_(d.nombre) + '! Ya tienes tu lugar.</h1>' +
+    '<p style="margin:0;font-size:15px;line-height:1.55;color:#525e7a">Recibimos tu registro al <b style="color:#15203d">Curso de Inducción a la Inteligencia Artificial</b>. Guarda este correo: aquí tienes todos los datos.</p>' +
+    '</td></tr>' +
+
+    // Folio
+    '<tr><td style="padding:18px 28px 6px">' +
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#eef3fc;border:1px dashed #2b50a8;border-radius:10px">' +
+    '<tr><td style="' + F + 'padding:14px 18px;font-size:13px;color:#525e7a">Tu folio</td>' +
+    '<td align="right" style="' + F + 'padding:14px 18px;font-size:22px;font-weight:bold;letter-spacing:2px;color:#14275a">' + escapar_(d.folio) + '</td></tr></table>' +
+    '</td></tr>' +
+
+    // Datos del curso
+    '<tr><td style="padding:18px 28px 4px">' +
+    '<div style="' + F + 'font-size:16px;font-weight:bold;color:#14275a;margin-bottom:4px">Datos del curso</div>' +
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0">' +
+    fila("Fecha", "<b>Domingo 18 de octubre de 2026</b>") +
+    fila("Horario", "De 9:00 a 13:00 h") +
+    fila("Lugar", "<b>CONAMAT Plantel San Cosme</b><br>Joaquín García Icazbalceta 57, col. San Rafael, alcaldía Cuauhtémoc, C.P. 06470, CDMX") +
+    fila("Costo", "Gratuito") +
+    '</table></td></tr>' +
+
+    // Botón mapa
+    '<tr><td style="padding:18px 28px 6px">' +
+    '<a href="' + mapa + '" style="' + F + 'display:inline-block;background:#14275a;color:#ffffff;text-decoration:none;font-size:15px;font-weight:bold;padding:13px 22px;border-radius:24px">Cómo llegar en Google Maps</a>' +
+    '</td></tr>' +
+
+    // Qué llevar
+    '<tr><td style="padding:22px 28px 6px">' +
+    '<div style="' + F + 'font-size:16px;font-weight:bold;color:#14275a;margin-bottom:6px">No olvides llevar</div>' +
+    '<table role="presentation" cellpadding="0" cellspacing="0">' +
+    check("<b>Tu equipo de cómputo</b> (laptop con batería cargada y su cargador). El curso es práctico.") +
+    check("<b>Tu correo @gmail.com y su contraseña</b>, para crear tus cuentas en las herramientas de IA.") +
+    '</table></td></tr>' +
+
+    // Cupo
+    '<tr><td style="padding:16px 28px 26px">' +
+    '<div style="' + F + 'background:#fdeeec;border-radius:10px;padding:12px 16px;font-size:14px;line-height:1.5;color:#8f2a20"><b>El cupo es limitado.</b> ¡Te esperamos puntual!</div>' +
+    '</td></tr>' +
+
+    // Firma
+    '<tr><td style="' + F + 'padding:18px 28px 24px;border-top:1px solid #e3e8f2;font-size:14px;line-height:1.5;color:#525e7a">' +
+    '<b style="color:#15203d">Ing. Itzel Guerrero</b><br>Departamento de Vinculación<br>CONAMAT Plantel Hidalgo – San Cosme' +
+    '</td></tr>' +
+
+    '</table>' +
+    '<p style="' + F + 'max-width:560px;margin:14px auto 0;text-align:center;font-size:12px;color:#8790a6">Recibiste este correo porque te registraste al Curso de Inducción a la IA de CONAMAT Hidalgo – San Cosme.</p>' +
     '</div>';
-  MailApp.sendEmail({ to: d.correo, subject: asunto, htmlBody: html, name: "CONAMAT Hidalgo – San Cosme" });
+
+  const texto =
+    "¡Hola, " + d.nombre + "! Ya tienes tu lugar en el Curso de Inducción a la Inteligencia Artificial.\n\n" +
+    "Folio: " + d.folio + "\n" +
+    "Fecha: domingo 18 de octubre de 2026, de 9:00 a 13:00 h\n" +
+    "Lugar: CONAMAT Plantel San Cosme, Joaquín García Icazbalceta 57, col. San Rafael, C.P. 06470, CDMX\n" +
+    "Mapa: " + mapa + "\n\n" +
+    "No olvides llevar tu laptop con cargador y tu correo @gmail.com con su contraseña.\n" +
+    "El cupo es limitado. ¡Te esperamos!\n\n" +
+    "Ing. Itzel Guerrero · Departamento de Vinculación · CONAMAT Hidalgo – San Cosme";
+
+  MailApp.sendEmail({ to: d.correo, subject: asunto, body: texto, htmlBody: html, name: "CONAMAT Hidalgo – San Cosme" });
+}
+
+// Ejecuta esta función desde el editor para recibir un correo de muestra en tu propia cuenta
+function probarCorreo() {
+  enviarConfirmacion_({ nombre: "Itzel", folio: "IA-PRUEBA", correo: Session.getActiveUser().getEmail() });
 }
 
 function escapar_(s) {
