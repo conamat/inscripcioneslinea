@@ -1,0 +1,582 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Registro Curso de IA · CONAMAT Hidalgo – San Cosme</title>
+<meta name="description" content="Registro de profesores al Curso de Inducción a la Inteligencia Artificial de CONAMAT Plantel Hidalgo – San Cosme. Gratuito, cupo limitado.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* Layout: una sola columna centrada; cabecera tipo cartel + tarjeta de formulario en 4 bloques */
+:root{
+  --navy:#14275a; --brand:#2b50a8; --brand-2:#3a63c0;
+  --sky:#dfe8f8; --sky-2:#eef3fc; --sage:#e3eedc; --sage-ink:#3e6b2f;
+  --bg:#f1f4f9; --surface:#fff; --surface-2:#f7f9fc;
+  --border:#dbe2ee; --border-strong:#c3cde0;
+  --text:#15203d; --text-2:#525e7a; --text-3:#8790a6;
+  --ok:#1f9d57; --ok-soft:#e6f6ed; --err:#c9372a; --err-soft:#fdeeec;
+  --r-md:12px; --r-lg:18px;
+  --shadow:0 18px 50px -24px rgba(20,39,90,.35),0 4px 12px -6px rgba(20,39,90,.12);
+  --font:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font:400 16px/1.55 var(--font);padding:0 16px env(safe-area-inset-bottom,0)}
+.wrap{max-width:720px;margin:0 auto;padding-block:28px 56px}
+
+/* Cabecera */
+.hero{display:grid;gap:18px;padding-block:8px 28px}
+.logo{width:min(100%,420px);height:auto;display:block}
+.eyebrow{display:inline-block;justify-self:start;background:var(--sky);color:var(--navy);font-weight:700;font-size:15px;padding:6px 14px;border-radius:10px}
+h1{margin:0;font-size:clamp(34px,8vw,54px);line-height:1.02;font-weight:800;letter-spacing:-.02em;color:var(--navy);text-wrap:balance}
+h1 span{color:var(--brand)}
+.lead{margin:0;color:var(--text-2);font-size:17px;max-width:56ch}
+.perks{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 0;padding:0;list-style:none}
+.perks li{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:6px 14px 6px 8px;font-size:14px;font-weight:600;color:var(--navy)}
+.perks svg{width:22px;height:22px;padding:4px;border-radius:50%;background:var(--sky-2);color:var(--brand)}
+.perks li.free svg{background:var(--sage);color:var(--sage-ink)}
+
+/* Tarjeta */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);box-shadow:var(--shadow);overflow:hidden}
+fieldset{border:0;margin:0;padding:24px 24px 26px;display:grid;gap:18px}
+fieldset+fieldset{border-top:1px solid var(--border)}
+legend{float:left;width:100%;padding:0;display:flex;align-items:baseline;gap:10px;font-size:18px;font-weight:800;color:var(--navy)}
+legend small{font-size:13px;font-weight:600;color:var(--text-3)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:560px){.row{grid-template-columns:1fr} fieldset{padding:20px 18px 22px}}
+.field{display:grid;gap:6px;min-width:0}
+label,.q{font-size:14px;font-weight:700;color:var(--text)}
+.opt{font-weight:500;color:var(--text-3)}
+.hint{font-size:13px;color:var(--text-3);margin:0}
+input[type=text],input[type=email],input[type=tel],select,textarea{
+  width:100%;font:500 16px/1.4 var(--font);color:var(--text);background:var(--surface-2);
+  border:1.5px solid var(--border);border-radius:var(--r-md);padding:12px 14px;transition:border-color .15s,background .15s,box-shadow .15s}
+textarea{min-height:92px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--brand);background:var(--surface);box-shadow:0 0 0 4px rgba(43,80,168,.14)}
+.invalid input,.invalid select,.invalid textarea{border-color:var(--err);background:var(--err-soft)}
+.err{display:none;font-size:13px;font-weight:600;color:var(--err)}
+.invalid .err{display:block}
+
+/* Chips (radio / checkbox) */
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{position:relative}
+.chip input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.chip span{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border:1.5px solid var(--border-strong);border-radius:999px;font-size:14px;font-weight:600;color:var(--text-2);background:var(--surface);transition:all .15s;user-select:none}
+.chip input:checked+span{background:var(--navy);border-color:var(--navy);color:#fff}
+.chip input:focus-visible+span{box-shadow:0 0 0 4px rgba(43,80,168,.25)}
+.chip:hover span{border-color:var(--brand)}
+.invalid .chip span{border-color:var(--err)}
+.chips.stack{display:grid;gap:8px}
+.chips.stack .chip span{display:flex;border-radius:var(--r-md);padding:12px 14px}
+.chips.stack .chip span b{color:var(--text);font-weight:700}
+.chips.stack .chip input:checked+span b{color:#fff}
+
+.consent{display:flex;gap:12px;align-items:flex-start;font-size:14px;color:var(--text-2)}
+.consent input{width:20px;height:20px;margin:2px 0 0;accent-color:var(--navy);flex:none}
+
+/* Envío */
+.submit-bar{padding:22px 24px 26px;background:var(--surface-2);border-top:1px solid var(--border);display:grid;gap:12px}
+button{font:700 17px/1 var(--font);border:0;border-radius:999px;cursor:pointer}
+.btn{background:var(--navy);color:#fff;padding:17px 26px;display:flex;align-items:center;justify-content:center;gap:10px;transition:background .15s,transform .1s}
+.btn:hover{background:var(--brand)}
+.btn:active{transform:translateY(1px)}
+.btn:focus-visible{outline:3px solid var(--brand-2);outline-offset:3px}
+.btn[disabled]{opacity:.65;cursor:progress}
+.spin{width:18px;height:18px;border:2.5px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.form-msg{margin:0;font-size:14px;font-weight:600;color:var(--err)}
+.fine{margin:0;font-size:12.5px;color:var(--text-3);text-align:center}
+
+/* Confirmación */
+/* Fecha y requisitos */
+.date{display:flex;align-items:center;gap:16px;background:var(--navy);color:#fff;border-radius:var(--r-lg);padding:16px 20px;box-shadow:var(--shadow)}
+.date .cal{flex:none;width:62px;border-radius:10px;overflow:hidden;background:#fff;text-align:center;color:var(--navy)}
+.date .cal small{display:block;background:var(--err);color:#fff;font:800 11px/1 var(--font);letter-spacing:.12em;padding:5px 0}
+.date .cal b{display:block;font:800 28px/1.15 var(--font);padding:3px 0 4px;font-variant-numeric:tabular-nums}
+.date .when{min-width:0}
+.date .when strong{display:block;font-size:19px;line-height:1.25}
+.date .when span{font-size:15px;color:var(--sky)}
+.place{display:flex;gap:14px;align-items:flex-start;background:var(--surface);border:1.5px solid var(--border-strong);border-radius:var(--r-lg);padding:16px 20px}
+.place .pin{flex:none;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--sky-2);color:var(--brand)}
+.place .pin svg{width:20px;height:20px}
+.place .addr{display:grid;gap:3px;min-width:0;font-size:15px;color:var(--text-2)}
+.place .addr strong{font-size:17px;color:var(--navy)}
+.place a{justify-self:start;margin-top:4px;font-weight:700;color:var(--brand);text-underline-offset:3px}
+.place a:focus-visible{outline:3px solid var(--brand-2);outline-offset:2px;border-radius:4px}
+.must{background:var(--surface);border:1.5px solid var(--border-strong);border-radius:var(--r-lg);padding:18px 20px;display:grid;gap:12px}
+.must h2{margin:0;font-size:17px;font-weight:800;color:var(--navy)}
+.must ul{margin:0;padding:0;list-style:none;display:grid;gap:12px}
+.must li{display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start;font-size:15px;color:var(--text-2)}
+.must li b{color:var(--text)}
+.must .ic{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--sky-2);color:var(--brand)}
+.must .ic.warn{background:var(--err-soft);color:var(--err)}
+.must .ic svg{width:18px;height:18px}
+.cta{display:grid;padding-top:6px}
+.cta .btn{font-size:18px;padding:19px 26px;box-shadow:var(--shadow)}
+.soft-note{font-size:13px;font-weight:600;color:#9a5b00;background:#fdf3e3;border-radius:8px;padding:8px 10px;margin:0}
+.done ul{margin:0;padding:0;list-style:none;text-align:left;display:grid;gap:6px;color:var(--text-2);font-size:15px}
+.done{padding:40px 26px;text-align:center;display:grid;gap:14px;justify-items:center}
+.done .check{width:64px;height:64px;border-radius:50%;background:var(--ok-soft);color:var(--ok);display:grid;place-items:center}
+.done h2{margin:0;font-size:26px;color:var(--navy);text-wrap:balance}
+.done p{margin:0;color:var(--text-2);max-width:46ch}
+.folio{font:800 20px/1 var(--font);letter-spacing:.06em;color:var(--navy);background:var(--sky-2);border:1.5px dashed var(--brand);padding:12px 18px;border-radius:var(--r-md);font-variant-numeric:tabular-nums}
+.link{background:none;color:var(--brand);padding:8px;font-size:15px;text-decoration:underline}
+
+footer{margin-top:26px;text-align:center;font-size:13px;color:var(--text-3)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <img class="logo" src="logo-conamat.png" alt="CONAMAT Colegio Nacional de Matemáticas · Plantel Hidalgo – San Cosme" width="1076" height="214">
+    <span class="eyebrow">Curso de Inducción a la</span>
+    <h1>Inteligencia <span>Artificial</span></h1>
+    <p class="lead">Una introducción práctica y sencilla para incluirla en tus labores diarias. Regístrate para apartar tu lugar.</p>
+    <ul class="perks">
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M2 20h20"/></svg>Solo tu equipo de cómputo</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14c2.5 0 4.5 2 4.5 4.5"/></svg>¡Cupo limitado!</li>
+      <li class="free"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M5 12v9h14v-9M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg>100% gratuito</li>
+    </ul>
+    <div class="date">
+      <div class="cal" aria-hidden="true"><small>OCT</small><b>18</b></div>
+      <div class="when"><strong>Domingo 18 de octubre de 2026</strong><span>De 9:00 a 13:00 h</span></div>
+    </div>
+    <div class="place">
+      <span class="pin" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg></span>
+      <div class="addr">
+        <strong>CONAMAT Plantel San Cosme</strong>
+        <span>Joaquín García Icazbalceta 57, col. San Rafael, alcaldía Cuauhtémoc, C.P. 06470, CDMX</span>
+        <a href="https://www.google.com/maps/search/?api=1&amp;query=CONAMAT+San+Cosme+Joaqu%C3%ADn+Garc%C3%ADa+Icazbalceta+57+San+Rafael+06470" target="_blank" rel="noopener">Ver en Google Maps</a>
+      </div>
+    </div>
+    <section class="must" aria-labelledby="mustTitle">
+      <h2 id="mustTitle">Antes de registrarte, toma en cuenta</h2>
+      <ul>
+        <li><span class="ic warn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5v.5"/></svg></span><span><b>El cupo es limitado.</b></span></li>
+        <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M2 20h20"/></svg></span><span><b>Trae tu equipo de cómputo</b> (laptop con la batería cargada y su cargador). El curso es práctico y no habrá equipos para prestar.</span></li>
+        <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span><span><b>Trae tu correo @gmail.com y su contraseña.</b> Es obligatorio que sea Gmail: con él crearás tus cuentas en las herramientas de IA. Si no tienes uno, créalo gratis antes del curso.</span></li>
+      </ul>
+    </section>
+    <div class="cta" id="ctaWrap">
+      <button type="button" class="btn" id="start">Continuar con el registro <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+    </div>
+  </header>
+
+  <main class="card" id="card" hidden>
+    <form id="form" novalidate autocomplete="on">
+
+      <fieldset>
+        <legend>Tus datos</legend>
+        <div class="row">
+          <div class="field" data-req>
+            <label for="nombre">Nombre(s)</label>
+            <input type="text" id="nombre" name="nombre" autocomplete="given-name" required>
+            <span class="err">Escribe tu nombre.</span>
+          </div>
+          <div class="field" data-req>
+            <label for="apellidos">Apellidos</label>
+            <input type="text" id="apellidos" name="apellidos" autocomplete="family-name" required>
+            <span class="err">Escribe tus apellidos.</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="field" data-req data-type="email">
+            <label for="correo">Correo Gmail</label>
+            <input type="email" id="correo" name="correo" autocomplete="email" inputmode="email" placeholder="nombre@gmail.com" required>
+            <span class="err">El correo debe terminar en @gmail.com.</span>
+          </div>
+          <div class="field" data-req data-type="tel">
+            <label for="whatsapp">WhatsApp</label>
+            <input type="tel" id="whatsapp" name="whatsapp" autocomplete="tel-national" inputmode="numeric" maxlength="14" placeholder="55 1234 5678" required>
+            <span class="err">Escribe tu número a 10 dígitos.</span>
+          </div>
+        </div>
+        <p class="hint">Escribe el mismo correo @gmail.com que usarás en el curso. Por ahí y por WhatsApp te confirmaremos tu lugar.</p>
+      </fieldset>
+
+      <fieldset>
+        <legend>Tu trabajo</legend>
+        <div class="field" data-req>
+          <label for="plantel">¿De qué secundaria eres trabajador?</label>
+          <select id="plantel" name="plantel" required>
+            <option value="">Selecciona tu secundaria</option>
+            <optgroup label="Alcaldía Cuauhtémoc">
+              <option value="Diurna 3 “Héroes de Chapultepec” · Roma Norte">Diurna 3 “Héroes de Chapultepec” · Roma Norte</option>
+              <option value="Diurna 7 “José Manuel Ramos” · Centro">Diurna 7 “José Manuel Ramos” · Centro</option>
+              <option value="Diurna 11 “Adriana García Corral” · Centro">Diurna 11 “Adriana García Corral” · Centro</option>
+              <option value="Diurna 18 “Soledad Anaya Solórzano” · Roma Norte">Diurna 18 “Soledad Anaya Solórzano” · Roma Norte</option>
+              <option value="Diurna 26 “Francisco I. Madero” · San Rafael">Diurna 26 “Francisco I. Madero” · San Rafael</option>
+              <option value="Diurna 187 “Joaquín García Icazbalceta” · Tránsito">Diurna 187 “Joaquín García Icazbalceta” · Tránsito</option>
+              <option value="Secundaria “Abraham Lincoln” · Tránsito">Secundaria “Abraham Lincoln” · Tránsito</option>
+              <option value="Secundaria “Ana María Berlanga” · Santa María la Ribera">Secundaria “Ana María Berlanga” · Santa María la Ribera</option>
+              <option value="Secundaria “Ángel Trías Álvarez” · Centro">Secundaria “Ángel Trías Álvarez” · Centro</option>
+              <option value="Secundaria Anexa a la Normal Superior de México · Santa María la Ribera">Secundaria Anexa a la Normal Superior de México · Santa María la Ribera</option>
+              <option value="Secundaria “Antonio Ballesteros Usano” · Tlatelolco">Secundaria “Antonio Ballesteros Usano” · Tlatelolco</option>
+              <option value="Secundaria “Carlota Jaso” · Centro">Secundaria “Carlota Jaso” · Centro</option>
+              <option value="Secundaria “Celestino Gorostiza” · Santa María Insurgentes">Secundaria “Celestino Gorostiza” · Santa María Insurgentes</option>
+              <option value="Secundaria “César A. Ruiz” · Centro">Secundaria “César A. Ruiz” · Centro</option>
+              <option value="Secundaria “Dr. Manuel Barranco” · Santa María la Ribera">Secundaria “Dr. Manuel Barranco” · Santa María la Ribera</option>
+              <option value="Secundaria “Gral. Augusto C. Sandino” · Morelos">Secundaria “Gral. Augusto C. Sandino” · Morelos</option>
+              <option value="Secundaria “Gral. Francisco L. Urquizo” · Doctores">Secundaria “Gral. Francisco L. Urquizo” · Doctores</option>
+              <option value="Secundaria “Jorge Quijano” · Doctores">Secundaria “Jorge Quijano” · Doctores</option>
+              <option value="Secundaria “José María Morelos y Pavón” · Hipódromo">Secundaria “José María Morelos y Pavón” · Hipódromo</option>
+              <option value="Secundaria “José Vasconcelos” · Santa María la Ribera">Secundaria “José Vasconcelos” · Santa María la Ribera</option>
+              <option value="Secundaria “Justo Sierra” · Roma Norte">Secundaria “Justo Sierra” · Roma Norte</option>
+              <option value="Secundaria “Luis de Camoens” · Vallejo">Secundaria “Luis de Camoens” · Vallejo</option>
+              <option value="Secundaria “Maestro Juan G. Holguín” · Juárez">Secundaria “Maestro Juan G. Holguín” · Juárez</option>
+              <option value="Secundaria “Miguel Ramos Arizpe” · Roma Sur">Secundaria “Miguel Ramos Arizpe” · Roma Sur</option>
+              <option value="Secundaria “Moisés Sáenz” · Santa María la Ribera">Secundaria “Moisés Sáenz” · Santa María la Ribera</option>
+              <option value="Secundaria “Pedro Díaz” · Tlatelolco">Secundaria “Pedro Díaz” · Tlatelolco</option>
+              <option value="Secundaria “Presidente Valentín Gómez Farías” · Guerrero">Secundaria “Presidente Valentín Gómez Farías” · Guerrero</option>
+              <option value="Secundaria “Rafael Ramírez” · Tránsito">Secundaria “Rafael Ramírez” · Tránsito</option>
+              <option value="Secundaria “República Mexicana” · Juárez">Secundaria “República Mexicana” · Juárez</option>
+              <option value="Técnica 2 · Centro">Técnica 2 · Centro</option>
+              <option value="Técnica 3 “Venustiano Carranza” · Centro">Técnica 3 “Venustiano Carranza” · Centro</option>
+              <option value="Técnica 6 “Sor Juana Inés de la Cruz” · Centro">Técnica 6 “Sor Juana Inés de la Cruz” · Centro</option>
+              <option value="Técnica 8 · Hipódromo Condesa">Técnica 8 · Hipódromo Condesa</option>
+              <option value="Técnica 10 · Doctores">Técnica 10 · Doctores</option>
+              <option value="Técnica 12 “Guardias Presidenciales” · San Simón Tolnáhuac">Técnica 12 “Guardias Presidenciales” · San Simón Tolnáhuac</option>
+              <option value="Técnica 13 · Ampliación Asturias">Técnica 13 · Ampliación Asturias</option>
+              <option value="Técnica 23 “Mariano Vázquez Rodríguez” · Guerrero">Técnica 23 “Mariano Vázquez Rodríguez” · Guerrero</option>
+              <option value="Técnica 42 “Ing. Alejo Peralta Díaz Ceballos” · Morelos">Técnica 42 “Ing. Alejo Peralta Díaz Ceballos” · Morelos</option>
+              <option value="Técnica 63 “Melchor Ocampo” · Centro">Técnica 63 “Melchor Ocampo” · Centro</option>
+            </optgroup>
+            <optgroup label="Alcaldía Miguel Hidalgo">
+              <option value="Diurna 17 “Constitución de 1857” · Escandón">Diurna 17 “Constitución de 1857” · Escandón</option>
+              <option value="Diurna 20 “José Arteaga” · Pensil Norte">Diurna 20 “José Arteaga” · Pensil Norte</option>
+              <option value="Diurna 42 “Ignacio Manuel Altamirano” · Escandón">Diurna 42 “Ignacio Manuel Altamirano” · Escandón</option>
+              <option value="Diurna 66 “Ida Appendini Dagasso” · Polanco">Diurna 66 “Ida Appendini Dagasso” · Polanco</option>
+              <option value="Diurna 94 “Giuseppe Garibaldi” · Irrigación">Diurna 94 “Giuseppe Garibaldi” · Irrigación</option>
+              <option value="Diurna 96 “Dr. Enrique Herrera Moreno” · Un Hogar para Nosotros">Diurna 96 “Dr. Enrique Herrera Moreno” · Un Hogar para Nosotros</option>
+              <option value="Diurna 97 “Juan Enrique Pestalozzi” · Escandón">Diurna 97 “Juan Enrique Pestalozzi” · Escandón</option>
+              <option value="Diurna 120 “Rosario Castellanos” · Casco de Santo Tomás">Diurna 120 “Rosario Castellanos” · Casco de Santo Tomás</option>
+              <option value="Diurna 121 “Rabindranath Tagore” · Casco de Santo Tomás">Diurna 121 “Rabindranath Tagore” · Casco de Santo Tomás</option>
+              <option value="Diurna 168 “Maximiliano Ruiz Castañeda” · México Nuevo">Diurna 168 “Maximiliano Ruiz Castañeda” · México Nuevo</option>
+              <option value="Diurna 221 “Tlacaelel” · Irrigación">Diurna 221 “Tlacaelel” · Irrigación</option>
+              <option value="Diurna 254 “Nagoya” · Popotla">Diurna 254 “Nagoya” · Popotla</option>
+              <option value="Diurna 260 “Izkalotzin” · Cuauhtémoc Pensil">Diurna 260 “Izkalotzin” · Cuauhtémoc Pensil</option>
+              <option value="Diurna 263 “Deporte para Todos” · Anáhuac">Diurna 263 “Deporte para Todos” · Anáhuac</option>
+              <option value="Secundaria “Albert Einstein” · Un Hogar para Nosotros">Secundaria “Albert Einstein” · Un Hogar para Nosotros</option>
+              <option value="Secundaria “Don Benito Juárez” · Lomas de Chapultepec">Secundaria “Don Benito Juárez” · Lomas de Chapultepec</option>
+              <option value="Secundaria Federal · Cuauhtémoc Pensil">Secundaria Federal · Cuauhtémoc Pensil</option>
+              <option value="Secundaria “León Felipe” · Argentina Poniente">Secundaria “León Felipe” · Argentina Poniente</option>
+              <option value="Secundaria “República de Costa Rica” · San Joaquín">Secundaria “República de Costa Rica” · San Joaquín</option>
+              <option value="Técnica 4 · San Miguel Chapultepec">Técnica 4 · San Miguel Chapultepec</option>
+              <option value="Técnica 5 · Anáhuac">Técnica 5 · Anáhuac</option>
+              <option value="Técnica 26 “Carlos Pellicer Cámara” · Pensil Norte">Técnica 26 “Carlos Pellicer Cámara” · Pensil Norte</option>
+            </optgroup>
+            <optgroup label="¿No está tu escuela?">
+              <option value="Otra">Otra (escribir nombre)</option>
+            </optgroup>
+          </select>
+          <span class="err">Elige tu secundaria.</span>
+        </div>
+        <div class="field" id="otroWrap" hidden data-req-when-visible>
+          <label for="plantelOtro">Escribe el nombre de tu secundaria</label>
+          <input type="text" id="plantelOtro" name="plantelOtro" placeholder="Por ejemplo: Secundaria Diurna No. 0 &quot;Nombre&quot;">
+          <span class="err">Escribe el nombre de tu secundaria.</span>
+        </div>
+        <div class="field" data-req-group="puesto">
+          <span class="q" id="q-puesto">¿Cuál es tu puesto?</span>
+          <div class="chips" role="radiogroup" aria-labelledby="q-puesto">
+            <label class="chip"><input type="radio" name="puesto" value="Docente"><span>Docente</span></label>
+            <label class="chip"><input type="radio" name="puesto" value="Administrativo"><span>Administrativo</span></label>
+            <label class="chip"><input type="radio" name="puesto" value="Directivo"><span>Directivo</span></label>
+            <label class="chip"><input type="radio" name="puesto" value="Otro"><span>Otro</span></label>
+          </div>
+          <span class="err">Elige tu puesto.</span>
+        </div>
+        <div class="field" id="puestoOtroWrap" hidden data-req-when-visible>
+          <label for="puestoOtro">Escribe tu puesto</label>
+          <input type="text" id="puestoOtro" name="puestoOtro" placeholder="Por ejemplo: Orientación, Prefectura, Trabajo social">
+          <span class="err">Escribe tu puesto.</span>
+        </div>
+        <div id="docenteWrap" class="field" hidden>
+        <div class="field" data-req-group="materias">
+          <span class="q" id="q-materias">Materias que impartes</span>
+          <div class="chips" role="group" aria-labelledby="q-materias">
+            <label class="chip"><input type="checkbox" name="materias" value="Matemáticas"><span>Matemáticas</span></label>
+            <label class="chip"><input type="checkbox" name="materias" value="Física"><span>Física</span></label>
+            <label class="chip"><input type="checkbox" name="materias" value="Química"><span>Química</span></label>
+            <label class="chip"><input type="checkbox" name="materias" value="Biología"><span>Biología</span></label>
+            <label class="chip"><input type="checkbox" name="materias" value="Español / Redacción"><span>Español / Redacción</span></label>
+            <label class="chip"><input type="checkbox" name="materias" value="Historia / Geografía"><span>Historia / Geografía</span></label>
+            <label class="chip"><input type="checkbox" name="materias" value="Inglés"><span>Inglés</span></label>
+            <label class="chip"><input type="checkbox" name="materias" value="Habilidad verbal / matemática"><span>Habilidad verbal / matemática</span></label>
+            <label class="chip"><input type="checkbox" name="materias" value="Otra"><span>Otra</span></label>
+          </div>
+          <span class="err">Elige al menos una materia.</span>
+        </div>
+        <div class="field" id="materiaOtraWrap" hidden data-req-when-visible>
+          <label for="materiaOtra">¿Qué otra materia impartes?</label>
+          <input type="text" id="materiaOtra" name="materiaOtra" placeholder="Por ejemplo: Formación Cívica y Ética, Artes, Tecnología">
+          <span class="err">Escribe la materia.</span>
+        </div>
+        <div class="field" data-req-group="niveles">
+          <span class="q" id="q-niveles">Grados que atiendes</span>
+          <div class="chips" role="group" aria-labelledby="q-niveles">
+            <label class="chip"><input type="checkbox" name="niveles" value="1°"><span>1° de secundaria</span></label>
+            <label class="chip"><input type="checkbox" name="niveles" value="2°"><span>2° de secundaria</span></label>
+            <label class="chip"><input type="checkbox" name="niveles" value="3°"><span>3° de secundaria</span></label>
+          </div>
+          <span class="err">Elige al menos un grado.</span>
+        </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Tú y la IA</legend>
+        <div class="field" data-req-group="experiencia">
+          <span class="q" id="q-exp">¿Qué tanto has usado la inteligencia artificial?</span>
+          <div class="chips stack" role="radiogroup" aria-labelledby="q-exp">
+            <label class="chip"><input type="radio" name="experiencia" value="Nunca la he usado"><span><b>Nunca la he usado</b></span></label>
+            <label class="chip"><input type="radio" name="experiencia" value="La he probado algunas veces"><span><b>La he probado algunas veces</b></span></label>
+            <label class="chip"><input type="radio" name="experiencia" value="La uso con frecuencia"><span><b>La uso con frecuencia</b></span></label>
+          </div>
+          <span class="err">Elige una opción.</span>
+        </div>
+        <div class="field">
+          <span class="q" id="q-herr">Herramientas que conoces <span class="opt">(opcional)</span></span>
+          <div class="chips" role="group" aria-labelledby="q-herr">
+            <label class="chip"><input type="checkbox" name="herramientas" value="ChatGPT"><span>ChatGPT</span></label>
+            <label class="chip"><input type="checkbox" name="herramientas" value="Gemini"><span>Gemini</span></label>
+            <label class="chip"><input type="checkbox" name="herramientas" value="Claude"><span>Claude</span></label>
+            <label class="chip"><input type="checkbox" name="herramientas" value="Copilot"><span>Copilot</span></label>
+            <label class="chip"><input type="checkbox" name="herramientas" value="Canva IA"><span>Canva IA</span></label>
+            <label class="chip"><input type="checkbox" name="herramientas" value="Otra"><span>Otra</span></label>
+          </div>
+        </div>
+        <div class="field" data-req-group="usos">
+          <span class="q" id="q-usos">¿Para qué te gustaría usarla?</span>
+          <div class="chips" role="group" aria-labelledby="q-usos">
+            <label class="chip"><input type="checkbox" name="usos" value="Planear clases"><span>Planear clases</span></label>
+            <label class="chip"><input type="checkbox" name="usos" value="Crear ejercicios y exámenes"><span>Crear ejercicios y exámenes</span></label>
+            <label class="chip"><input type="checkbox" name="usos" value="Explicar temas difíciles"><span>Explicar temas difíciles</span></label>
+            <label class="chip"><input type="checkbox" name="usos" value="Revisar y retroalimentar"><span>Revisar y retroalimentar</span></label>
+            <label class="chip"><input type="checkbox" name="usos" value="Presentaciones y material visual"><span>Presentaciones y material visual</span></label>
+            <label class="chip"><input type="checkbox" name="usos" value="Oficios, reportes y documentos"><span>Oficios, reportes y documentos</span></label>
+            <label class="chip"><input type="checkbox" name="usos" value="Hojas de cálculo y listas"><span>Hojas de cálculo y listas</span></label>
+            <label class="chip"><input type="checkbox" name="usos" value="Correos y comunicación con padres"><span>Correos y comunicación con padres</span></label>
+          </div>
+          <span class="err">Elige al menos una opción.</span>
+        </div>
+        <div class="field">
+          <label for="comentarios">¿Algo que quieras aprender o preguntarnos? <span class="opt">(opcional)</span></label>
+          <textarea id="comentarios" name="comentarios" maxlength="600"></textarea>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Asistencia</legend>
+        <div class="field" data-req-group="compromisos" data-all="3">
+          <span class="q" id="q-comp">Confirma tu asistencia</span>
+          <p class="hint">Marca las tres casillas para completar tu registro.</p>
+          <div class="chips stack" role="group" aria-labelledby="q-comp">
+            <label class="chip"><input type="checkbox" name="compromisos" value="Asistiré el domingo 18 de octubre, 9:00 a 13:00"><span><b>Asistiré el domingo 18 de octubre, de 9:00 a 13:00</b></span></label>
+            <label class="chip"><input type="checkbox" name="compromisos" value="Llevaré mi equipo de cómputo"><span><b>Llevaré mi equipo de cómputo con su cargador</b></span></label>
+            <label class="chip"><input type="checkbox" name="compromisos" value="Llevaré mi correo Gmail con su contraseña"><span><b>Llevaré mi correo @gmail.com con su contraseña</b></span></label>
+          </div>
+          <span class="err">Marca las tres casillas para confirmar.</span>
+        </div>
+        <div class="field" data-req-check>
+          <label class="consent"><input type="checkbox" id="aviso" name="aviso"><span>Acepto que CONAMAT Plantel Hidalgo – San Cosme use mis datos solo para organizar este curso y contactarme sobre él.</span></label>
+          <span class="err">Necesitamos tu autorización para registrarte.</span>
+        </div>
+      </fieldset>
+
+      <div class="submit-bar">
+        <p class="form-msg" id="formMsg" role="alert" hidden></p>
+        <button type="submit" class="btn" id="btn"><span id="btnTxt">Registrarme al curso</span></button>
+        <p class="fine">El registro no tiene costo. Los lugares se asignan por orden de registro.</p>
+      </div>
+    </form>
+
+    <section class="done" id="done" hidden aria-live="polite">
+      <div class="check"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+      <h2 id="doneTitle">¡Listo, ya estás registrado!</h2>
+      <p>Te esperamos el <b>domingo 18 de octubre de 9:00 a 13:00</b> en <b>CONAMAT Plantel San Cosme</b>, Joaquín García Icazbalceta 57, col. San Rafael. Guarda tu folio; te escribiremos por correo y WhatsApp con los detalles.</p>
+      <div class="folio" id="folio">IA-0000</div>
+      <ul>
+        <li>✔ Trae tu laptop cargada y su cargador.</li>
+        <li>✔ Trae tu correo @gmail.com y su contraseña.</li>
+      </ul>
+      <button type="button" class="link" id="otro">Registrar a otro profesor</button>
+    </section>
+  </main>
+
+  <footer>CONAMAT Colegio Nacional de Matemáticas · Plantel Hidalgo – San Cosme · Departamento de Vinculación</footer>
+</div>
+
+<script>
+(() => {
+  /* Pega aquí la URL de tu Web App de Google Apps Script (termina en /exec).
+     Si queda vacía, el formulario funciona en modo demostración y no guarda nada. */
+  const ENDPOINT = "https://script.google.com/macros/s/AKfycbzkQzwMBT-wg2ZiVOb8sTOitMYaQY7xie4p2mjfYCShVe3KDobUkT682nXFfRwugMcZew/exec";
+
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const form = $("#form"), btn = $("#btn"), btnTxt = $("#btnTxt"), msg = $("#formMsg");
+
+  // "Otra" abre un cuadro para escribir el nombre de la secundaria
+  const plantel = $("#plantel"), otroWrap = $("#otroWrap");
+  plantel.addEventListener("change", () => {
+    otroWrap.hidden = plantel.value !== "Otra";
+    if (!otroWrap.hidden) $("#plantelOtro").focus();
+  });
+
+  // Materias y grados solo para docentes; "Otro" puesto y "Otra" materia piden escribirlo
+  const docenteWrap = $("#docenteWrap"), puestoOtroWrap = $("#puestoOtroWrap"), materiaOtraWrap = $("#materiaOtraWrap");
+  function syncPuesto() {
+    const puesto = values("puesto")[0] || "";
+    docenteWrap.hidden = puesto !== "Docente";
+    puestoOtroWrap.hidden = puesto !== "Otro";
+    materiaOtraWrap.hidden = !values("materias").includes("Otra");
+  }
+  form.addEventListener("change", (e) => {
+    if (e.target.name === "puesto" || e.target.name === "materias") syncPuesto();
+  });
+
+  // WhatsApp: solo dígitos, agrupados 2-4-4
+  const tel = $("#whatsapp");
+  tel.addEventListener("input", () => {
+    const d = tel.value.replace(/\D/g, "").slice(0, 10);
+    tel.value = [d.slice(0, 2), d.slice(2, 6), d.slice(6)].filter(Boolean).join(" ");
+  });
+
+  // El formulario aparece hasta que la persona decide continuar
+  $("#start").addEventListener("click", () => {
+    $("#ctaWrap").hidden = true;
+    $("#card").hidden = false;
+    $("#card").scrollIntoView({ behavior: "smooth", block: "start" });
+    $("#nombre").focus({ preventScroll: true });
+  });
+
+  const values = (name) => $$(`input[name="${name}"]:checked`).map((i) => i.value);
+  const emailOk = (v) => /^[^\s@]+@gmail\.com$/i.test(v);
+
+  function validate() {
+    let first = null;
+    const mark = (field, bad) => {
+      field.classList.toggle("invalid", bad);
+      if (bad && !first) first = field;
+    };
+    $$("[data-req]").forEach((f) => {
+      const el = $("input,select,textarea", f);
+      const v = el.value.trim();
+      let bad = !v;
+      if (!bad && f.dataset.type === "email") bad = !emailOk(v);
+      if (!bad && f.dataset.type === "tel") bad = v.replace(/\D/g, "").length !== 10;
+      mark(f, bad);
+    });
+    $$("[data-req-when-visible]").forEach((f) => mark(f, !f.closest("[hidden]") && !$("input", f).value.trim()));
+    $$("[data-req-group]").forEach((f) => mark(f, !f.closest("[hidden]") && values(f.dataset.reqGroup).length < (+f.dataset.all || 1)));
+    $$("[data-req-check]").forEach((f) => mark(f, !$("input", f).checked));
+    return first;
+  }
+
+  // Quita el error en cuanto la persona corrige el campo
+  form.addEventListener("input", (e) => {
+    const f = e.target.closest(".invalid");
+    if (f) f.classList.remove("invalid");
+  });
+  form.addEventListener("change", (e) => {
+    const f = e.target.closest(".invalid");
+    if (f) f.classList.remove("invalid");
+  });
+
+  function payload() {
+    const val = (id) => $("#" + id).value.trim();
+    const otro = otroWrap.hidden ? "" : val("plantelOtro");
+    return {
+      nombre: val("nombre"),
+      apellidos: val("apellidos"),
+      correo: val("correo").toLowerCase(),
+      whatsapp: val("whatsapp").replace(/\D/g, ""),
+      plantel: otro ? `Otra: ${otro}` : plantel.value,
+      puesto: values("puesto")[0] === "Otro" ? `Otro: ${val("puestoOtro")}` : values("puesto")[0] || "",
+      materias: docenteWrap.hidden ? "" : values("materias").map((m) => m === "Otra" ? `Otra: ${val("materiaOtra")}` : m).join(", "),
+      niveles: docenteWrap.hidden ? "" : values("niveles").join(", "),
+      experiencia: values("experiencia")[0] || "",
+      herramientas: values("herramientas").join(", "),
+      usos: values("usos").join(", "),
+      comentarios: val("comentarios"),
+      asistencia: values("compromisos").some((v) => v.startsWith("Asistiré")) ? "Sí" : "",
+      laptop: values("compromisos").some((v) => v.includes("cómputo")) ? "Sí" : "",
+      correoIA: values("compromisos").some((v) => v.includes("correo")) ? "Sí" : "",
+      aviso: "Aceptado",
+    };
+  }
+
+  function makeFolio() {
+    const n = (Date.now() % 100000).toString().padStart(5, "0");
+    return "IA-" + n + Math.floor(Math.random() * 10);
+  }
+
+  function setBusy(busy) {
+    btn.disabled = busy;
+    btn.innerHTML = busy ? '<span class="spin" aria-hidden="true"></span><span>Enviando…</span>' : '<span>Registrarme al curso</span>';
+  }
+
+  function finish(folio, nombre) {
+    form.hidden = true;
+    $("#folio").textContent = folio;
+    $("#doneTitle").textContent = `¡Listo, ${nombre}, ya estás registrado!`;
+    $("#done").hidden = false;
+    $("#card").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    msg.hidden = true;
+    const bad = validate();
+    if (bad) {
+      msg.textContent = "Revisa los campos marcados en rojo.";
+      msg.hidden = false;
+      bad.scrollIntoView({ behavior: "smooth", block: "center" });
+      const el = $("input,select,textarea", bad);
+      if (el) el.focus({ preventScroll: true });
+      return;
+    }
+    const data = payload();
+    data.folio = makeFolio();
+    setBusy(true);
+
+    if (!ENDPOINT) { // modo demostración
+      setTimeout(() => { setBusy(false); finish(data.folio + " (demo)", data.nombre); }, 800);
+      return;
+    }
+    try {
+      // no-cors + text/plain: Apps Script no devuelve cabeceras CORS legibles,
+      // así que enviamos sin leer la respuesta. El folio se genera aquí.
+      await fetch(ENDPOINT, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(data),
+      });
+      setBusy(false);
+      finish(data.folio, data.nombre);
+    } catch (err) {
+      setBusy(false);
+      msg.textContent = "No se pudo enviar tu registro. Revisa tu conexión a internet e inténtalo de nuevo.";
+      msg.hidden = false;
+    }
+  });
+
+  $("#otro").addEventListener("click", () => {
+    form.reset();
+    otroWrap.hidden = true;
+    syncPuesto();
+    $("#done").hidden = true;
+    form.hidden = false;
+    $("#nombre").focus();
+  });
+})();
+</script>
+</body>
+</html>
