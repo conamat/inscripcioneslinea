@@ -138,7 +138,7 @@ function enviarConfirmacion_(d) {
 
     // Firma
     '<tr><td style="' + F + 'padding:18px 28px 24px;border-top:1px solid #e3e8f2;font-size:14px;line-height:1.5;color:#525e7a">' +
-    '<b style="color:#15203d">Ing. Itzel Guerrero</b><br>Departamento de Vinculación<br>CONAMAT Plantel Hidalgo – San Cosme' +
+    '<b style="color:#15203d">CONAMAT Plantel Hidalgo – San Cosme</b>' +
     '</td></tr>' +
 
     '</table>' +
@@ -153,7 +153,7 @@ function enviarConfirmacion_(d) {
     "Mapa: " + mapa + "\n\n" +
     "No olvides llevar tu laptop con cargador y tu correo @gmail.com con su contraseña.\n" +
     "El cupo es limitado. ¡Te esperamos!\n\n" +
-    "Ing. Itzel Guerrero · Departamento de Vinculación · CONAMAT Hidalgo – San Cosme";
+    "CONAMAT Plantel Hidalgo – San Cosme";
 
   MailApp.sendEmail({ to: d.correo, subject: asunto, body: texto, htmlBody: html, name: "CONAMAT Hidalgo – San Cosme" });
 }
